@@ -19,14 +19,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '@4c(_rca3o&%egvnqn4u%e_7&6ykmob_&*q--wsl#mb#z*-8a#'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -131,7 +123,45 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
+
+
+#################
+# Please have these vars in your bin/activate file:
+# export SECRET_KEY='anyrandomvaluehere'
+# export DEBUG = True
+# export ALLOWED_HOSTS = []
+
+# If using console for the email backend, you need only:
+# export EMAIL_BACKEND='django.core.mail.backends.console.EmailBackend'
+
+# If using smtp for the email backend, you need to create a gmail account
+# that sends activation emails and set these vars:
+# export EMAIL_BACKEND='django.core.mail.backends.console.EmailBackend'
+# export EMAIL_HOST='smtp.google.com'
+# export EMAIL_HOST_USER='youraccount@gmail.com'
+# export DEFAULT_FROM_EMAIL='youraccount@gmail.com'
+# export EMAIL_HOST_PASSWORD='yourgmailpassword'
+#################
+
+# Settings for the registration email functionality
+
+ACCOUNT_ACTIVATION_DAYS = 7
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS")
+EMAIL_BACKEND = os.environ.get("EMAIL_BACKEND")
+EMAIL_HOST = os.environ.get("EMAIL_HOST")
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
+DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL")
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = os.environ.get("SECRET_KEY")
+
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = os.environ.get('DEBUG', False)
