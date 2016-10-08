@@ -1,3 +1,4 @@
 from django.contrib import admin
+from securedpi_profile.models import SecuredpiProfile
 
-# Register your models here.
+admin.site.register(SecuredpiProfile)
