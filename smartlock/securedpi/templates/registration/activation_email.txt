@@ -1,5 +1,5 @@
-registration/activation_email.txt
-Thank you for the registration with SecuredPi.
+
+Thank you for the registering with SecuredPi.
 Click on the link bellow to activate your account.
-The link will be invalid in 7 days.
+The link will expire in 7 days.
 http://{{ site }}{% url 'registration_activate' activation_key=activation_key %}

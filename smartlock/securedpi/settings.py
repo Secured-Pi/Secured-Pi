@@ -123,19 +123,21 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
 
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+# Settings for the registration email functionality
 
 #################
 # Please have these vars in your bin/activate file:
 # export SECRET_KEY='anyrandomvaluehere'
 # export DEBUG = True
 # export ALLOWED_HOSTS = []
-
+################
 # If using console for the email backend, you need only:
 # export EMAIL_BACKEND='django.core.mail.backends.console.EmailBackend'
 
@@ -148,7 +150,6 @@ STATICFILES_DIRS = [
 # export EMAIL_HOST_PASSWORD='yourgmailpassword'
 #################
 
-# Settings for the registration email functionality
 
 ACCOUNT_ACTIVATION_DAYS = 7
 ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS")
