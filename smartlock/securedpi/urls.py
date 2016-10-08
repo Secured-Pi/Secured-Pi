@@ -22,5 +22,6 @@ urlpatterns = [
         admin.site.urls),
     url(r'^$',
         TemplateView.as_view(
-            template_name='securedpi/home_page.html'))
+            template_name='securedpi/home_page.html'),
+        name='homepage')
 ]
