@@ -17,6 +17,7 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django.views.generic.base import TemplateView
 
+
 urlpatterns = [
     url(r'^admin/',
         admin.site.urls),
@@ -28,5 +29,9 @@ urlpatterns = [
         include('registration.backends.hmac.urls')),
     url(r'^about/$',
         TemplateView.as_view(template_name='securedpi/about_page.html'),
-        name='about')
+        name='about'),
+    url(r'^profile',
+        include('securedpi_profile.urls')),
+    url(r'^locks',
+        include('securedpi_locks.urls'))
 ]
