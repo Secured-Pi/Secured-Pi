@@ -49,6 +49,17 @@ class HomePageTestCase(TestCase):
         response = self.client.get(reverse('about'))
         self.assertEqual(response.status_code, 200)
 
+    def test_no_auth_links_in_nav_if_unauth(self):
+        """
+        Make sure there are no links associated with auth user view
+        in the nav if unauth.
+        """
+        auth_links = [
+            'auth_logout',
+        ]
+        for link in auth_links:
+            self.assertNotContains(self.response, link)
+
 
 class RegistrationTestCase(TestCase):
     """Setup Registration test case."""
