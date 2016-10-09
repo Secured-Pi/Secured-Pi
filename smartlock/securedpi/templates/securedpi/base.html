@@ -9,6 +9,15 @@
   <link type="text/css" rel="stylesheet" href="{% static "css/base.css" %}" charset="utf-8">
 </head>
 
+<header>
+  {% if user.is_authenticated %}
+    <div class="nav">
+      <a class="nav-link" href="{% url 'homepage' %}">Welcome, {{ user.username }}</a>
+      <a class="nav-link" href="{% url 'auth_logout' %}">Log Out</a>
+    </div>
+    {% endif %}
+</header>
+
 <body>
   {% block body %} {% endblock %}
 </body>

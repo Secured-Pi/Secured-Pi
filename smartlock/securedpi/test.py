@@ -105,15 +105,22 @@ class LoginLogoutTestCase(TestCase):
         self.user.set_password('testpassword&#')
         self.user.save()
         self.home_url = reverse('homepage')
-        self.login_response = self.client.post(
-            reverse('auth_login'),
-            {"username": 'test', "password": "testpassword&#"}
-        )
+        self.login_url = reverse('auth_login')
+        self.logout_url = reverse('auth_logout')
         self.bad_login_response = self.client.post(
-            reverse('auth_login'),
+            self.login_url,
             {"username": 'wrong', "password": "wrongpassword"}
         )
-        self.logout_response = self.client.get(reverse('auth_logout'))
+        self.login_response = self.client.post(
+            self.login_url,
+            {"username": 'test', "password": "testpassword&#"}
+        )
+        self.login_response_follow = self.client.post(
+            self.login_url,
+            {"username": 'test', "password": "testpassword&#"},
+            follow=True
+        )
+        self.logout_response = self.client.get(self.logout_url)
 
     def test_redirection_after_logged_in(self):
         """Test successful login redirection."""
@@ -134,3 +141,13 @@ class LoginLogoutTestCase(TestCase):
     def test_redirected_to_homepage_after_logged_out(self):
         """Prove redirection to the home page after loggin out."""
         self.assertEqual(self.logout_response.url, self.home_url)
+
+    def test_welcome_username_linked_to_page(self):
+        """Test that 'Welcome, <username>' links to expected page."""
+        expected = 'href="{}"'.format(self.home_url)
+        self.assertContains(self.login_response_follow, expected)
+
+    def test_logout_button_exists(self):
+        """Test auth user has logout button that links to correct url."""
+        expected = 'href="{}"'.format(self.logout_url)
+        self.assertContains(self.login_response_follow, expected)

@@ -7,3 +7,14 @@ input {
   max-width: 400px;
   margin: 0.5em  auto;
 }
+
+.nav {
+  text-align: right;
+  margin-top: 20px;
+  margin-right: 50px;
+}
+
+.nav-link {
+  font-size: 1.4em;
+  margin: 10px;
+}
