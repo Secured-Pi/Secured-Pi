@@ -30,7 +30,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'securedpi_profile.apps.SecuredpiProfileConfig',
-    'bootstrap3'
+    'bootstrap3',
+    'securedpi_locks.apps.SecuredpiLocksConfig',
 ]
 
 MIDDLEWARE = [
