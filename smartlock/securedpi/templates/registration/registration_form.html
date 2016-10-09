@@ -1,0 +1,18 @@
+{% extends "securedpi/base.html" %}
+{% block body %}
+<main id="register" class="container-fluid portal-main">
+  <section class="row">
+    <br/>
+    <br/>
+    <br/>
+    {% if form.errors %}
+      {{ form.errors }}
+    {% endif %}
+    <form action="" method="post" class="form-signin">{% csrf_token %}
+      {{ form }}
+
+      <button class="btn btn-lg btn-success btn-block" type="submit">SignUp</button>
+    </form>
+  </section>
+</main>
+{% endblock %}

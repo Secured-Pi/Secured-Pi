@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>SecuredPi</title>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+  {% load static %}
+  <link type="text/css" rel="stylesheet" href="{% static "css/base.css" %}" charset="utf-8">
+</head>
+
+<header>
+    <div class="nav">
+      <a class="nav-link" href="{% url 'homepage' %}">Home</a>
+      {% if user.is_authenticated %}
+        <a class="nav-link" href="{% url 'homepage' %}">Welcome, {{ user.username }}</a>
+        <a class="nav-link" href="{% url 'auth_logout' %}">Log Out</a>
+      {% endif %}
+      <a class="nav-link" href="{% url 'about' %}">About</a>
+    </div>
+</header>
+
+<body>
+  {% block body %} {% endblock %}
+</body>
+
+<footer>
+</footer>
+</html>
