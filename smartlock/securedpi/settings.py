@@ -51,6 +51,7 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             (os.path.join(BASE_DIR, 'securedpi', 'templates')),
+            (os.path.join(BASE_DIR, 'securedpi_locks', 'templates'))
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -168,5 +169,5 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', False)
 
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/locks/dashboard/'
 LOGOUT_REDIRECT_URL = '/'

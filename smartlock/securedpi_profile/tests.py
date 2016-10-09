@@ -2,9 +2,6 @@ from django.test import TestCase
 from django.contrib.auth.models import User
 from securedpi_profile.models import SecuredpiProfile
 from django.urls import reverse
-import os
-
-HERE = os.path.dirname(os.path.abspath(__file__))
 
 
 class SecurepiProfileTestCase(TestCase):

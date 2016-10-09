@@ -1,9 +1,6 @@
 from django.test import TestCase
 from django.contrib.auth.models import User
 from securedpi_locks.models import SecuredpiLock
-import os
-
-HERE = os.path.dirname(os.path.abspath(__file__))
 
 
 class SecurepiLockTestCase(TestCase):
