@@ -30,8 +30,8 @@ urlpatterns = [
     url(r'^about/$',
         TemplateView.as_view(template_name='securedpi/about_page.html'),
         name='about'),
-    url(r'^profile',
-        include('securedpi_profile.urls')),
-    url(r'^locks',
-        include('securedpi_locks.urls'))
+    # url(r'^profile',
+    #     include('securedpi_profile.urls')),
+    # url(r'^locks',
+    #     include('securedpi_locks.urls'))
 ]

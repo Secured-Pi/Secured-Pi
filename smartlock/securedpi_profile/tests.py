@@ -10,7 +10,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 class SecurepiProfileTestCase(TestCase):
     """Create test class for SecuredpiProfile model."""
     def setUp(self):
-        """Set up a fake user and profile."""
+        """Set up a fake user."""
         self.user = User(username='test')
         self.user.set_password('test')
         self.user.save()
