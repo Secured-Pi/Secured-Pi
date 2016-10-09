@@ -143,7 +143,7 @@ STATICFILES_DIRS = [
 
 # If using smtp for the email backend, you need to create a gmail account
 # that sends activation emails and set these vars:
-# export EMAIL_BACKEND='django.core.mail.backends.console.EmailBackend'
+# export EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
 # export EMAIL_HOST='smtp.google.com'
 # export EMAIL_HOST_USER='youraccount@gmail.com'
 # export DEFAULT_FROM_EMAIL='youraccount@gmail.com'
