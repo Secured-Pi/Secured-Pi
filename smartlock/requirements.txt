@@ -1,6 +1,8 @@
 appnope==0.1.0
 decorator==4.0.10
 Django==1.10.2
+django-bootstrap3==7.1.0
+django-registration==2.1.2
 flake8==3.0.4
 ipython==5.1.0
 ipython-genutils==0.1.0
