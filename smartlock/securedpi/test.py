@@ -34,6 +34,21 @@ class HomePageTestCase(TestCase):
         expected = 'href="{}"'.format(login_url)
         self.assertContains(self.response, expected, status_code=200)
 
+    def test_about_link_in_nav(self):
+        """Make sure an unauth user has <About> in the nav."""
+        expected = 'href="{}"'.format(reverse('about'))
+        self.assertContains(self.response, expected)
+
+    def test_home_link_in_nav(self):
+        """Make sure an unauth user has <Home> in the nav."""
+        expected = 'href="{}"'.format(reverse('homepage'))
+        self.assertContains(self.response, expected)
+
+    def test_unauth_access_about_page(self):
+        """Prove that an unauth user can access About page."""
+        response = self.client.get(reverse('about'))
+        self.assertEqual(response.status_code, 200)
+
 
 class RegistrationTestCase(TestCase):
     """Setup Registration test case."""

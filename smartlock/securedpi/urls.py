@@ -26,4 +26,7 @@ urlpatterns = [
         name='homepage'),
     url(r'^accounts/',
         include('registration.backends.hmac.urls')),
+    url(r'^about/$',
+        TemplateView.as_view(template_name='securedpi/about_page.html'),
+        name='about')
 ]
