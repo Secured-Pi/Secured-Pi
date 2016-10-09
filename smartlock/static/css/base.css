@@ -2,3 +2,8 @@
   margin-top: 100px;
   text-align: center;
 }
+
+input {
+  max-width: 400px;
+  margin: 0.5em  auto;
+}

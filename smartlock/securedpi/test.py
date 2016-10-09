@@ -1,6 +1,7 @@
 from django.test import TestCase
 from django.urls import reverse
 from django.core import mail
+from django.contrib.auth.models import User
 
 
 class HomePageTestCase(TestCase):
@@ -20,6 +21,18 @@ class HomePageTestCase(TestCase):
             'securedpi/home_page.html', 'securedpi/base.html'
         ]:
             self.assertTemplateUsed(self.response, template_name)
+
+    def test_for_registration_button(self):
+        """Prove home page contains registration page link."""
+        reg_url = reverse("registration_register")
+        expected = 'href="{}"'.format(reg_url)
+        self.assertContains(self.response, expected, status_code=200)
+
+    def test_for_login_button(self):
+        """Assert that home page contains a link to the login page"""
+        login_url = reverse('auth_login')
+        expected = 'href="{}"'.format(login_url)
+        self.assertContains(self.response, expected, status_code=200)
 
 
 class RegistrationTestCase(TestCase):
@@ -55,3 +68,69 @@ class RegistrationTestCase(TestCase):
         self.assertEqual(
             self.post_response.url,
             reverse('registration_complete'))
+
+
+class EmailTest(TestCase):
+    """Set up Email Test Class."""
+    def test_send_email(self):
+        """Tests that registration email was sent."""
+        mail.send_mail(
+            "Registration details", "This is the registration message.",
+            'user@djangoimager.com', ['s@s.com', 'd@s.com'],
+            fail_silently=False,
+        )
+        # Tests that an email was sent
+        self.assertEqual(len(mail.outbox), 1)
+
+        # Verify the subject of the first message is as expected
+        self.assertEqual(mail.outbox[0].subject, "Registration details")
+
+        # Verify the message of the email is as expected
+        self.assertEqual(
+            mail.outbox[0].message()._payload,
+            "This is the registration message.")
+
+        # Verify the recipients are as expected
+        self.assertEqual(mail.outbox[0].to, ['s@s.com', 'd@s.com'])
+
+        # Verify the sender is as expected
+        self.assertEqual(mail.outbox[0].from_email, "user@djangoimager.com")
+
+
+class LoginLogoutTestCase(TestCase):
+    """Define test case for Login/Logout functionality."""
+    def setUp(self):
+        """Set up response for login tests."""
+        self.user = User(username='test')
+        self.user.set_password('testpassword&#')
+        self.user.save()
+        self.home_url = reverse('homepage')
+        self.login_response = self.client.post(
+            reverse('auth_login'),
+            {"username": 'test', "password": "testpassword&#"}
+        )
+        self.bad_login_response = self.client.post(
+            reverse('auth_login'),
+            {"username": 'wrong', "password": "wrongpassword"}
+        )
+        self.logout_response = self.client.get(reverse('auth_logout'))
+
+    def test_redirection_after_logged_in(self):
+        """Test successful login redirection."""
+        self.assertEqual(self.login_response.status_code, 302)
+
+    def test_redirected_to_homepage_after_logged_in(self):
+        """Prove redirection to the home page after loggin in."""
+        self.assertEqual(self.login_response.url, self.home_url)
+
+    def test_not_redirected_when_failed_login(self):
+        """Prove that the user is not redirected if wrong credentials."""
+        self.assertEqual(self.bad_login_response.status_code, 200)
+
+    def test_logout_succesful_redirection(self):
+        """Test successful logout redirection."""
+        self.assertEqual(self.logout_response.status_code, 302)
+
+    def test_redirected_to_homepage_after_logged_out(self):
+        """Prove redirection to the home page after loggin out."""
+        self.assertEqual(self.logout_response.url, self.home_url)

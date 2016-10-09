@@ -1,14 +1,16 @@
 {% extends "securedpi/base.html" %}
 {% block body %}
+<div class="meta">
   <form action="" method="POST">{% csrf_token %}
-    <div class="form-group col-xs-3">
-      <h2>Login</h2>
-      <input type="text" class="form-control col-lg" name="username" placeholder="username"/>
-      <input type="password" class="form-control col-lg" name="password" placeholder="password"/>
-      <input class="btn btn-primary" type="submit" value="Submit"/>
-    </div>
-    {% if error %}
-      <h1>{{ error }}</h1>
-    {% endif %}
+      <div >
+        <h2>Login</h2>
+        <input type="text" class="form-control col-lg" name="username" placeholder="username"/>
+        <input type="password" class="form-control col-lg" name="password" placeholder="password"/>
+        <input class="btn btn-primary" type="submit" value="Submit"/>
+      </div>
+      {% if error %}
+        <h1>{{ error }}</h1>
+      {% endif %}
   </form>
+</div>
 {% endblock %}

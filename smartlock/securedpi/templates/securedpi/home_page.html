@@ -4,8 +4,12 @@
   <h2><strong>Secured-Pi</strong></h2>
   <h4>Create an account or log in below</h4>
   <div>
+    <a href="{% url 'auth_login' %}">
       <input type="button" value="Log In" class="btn btn-primary"/>
+    </a>
+    <a href="{% url 'registration_register' %}">
       <input type="button" value="Sign Up" class="btn btn-primary">
+    </a>
   </div>
 </div>
 {% endblock %}
