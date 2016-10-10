@@ -171,7 +171,7 @@ class LoginLogoutTestCase(TestCase):
 
     def test_welcome_username_linked_to_page(self):
         """Test that 'Welcome, <username>' links to expected page."""
-        expected = 'href="{}"'.format(self.home_url)
+        expected = 'href="{}"'.format(self.dashboard_url)
         self.assertContains(self.login_response_follow, expected)
 
     def test_logout_button_exists(self):
