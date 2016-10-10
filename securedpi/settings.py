@@ -78,7 +78,7 @@ DATABASES = {
         default='postgres://{}@localhost:5432/securedpi'
         .format(os.environ.get('USER')))
 }
-
+#
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql',
@@ -137,7 +137,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
 
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = BASE_DIR
 
 # Settings for the registration email functionality
 
