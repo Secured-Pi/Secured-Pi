@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'securedpi_profile.apps.SecuredpiProfileConfig',
     'bootstrap3',
     'securedpi_locks.apps.SecuredpiLocksConfig',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
