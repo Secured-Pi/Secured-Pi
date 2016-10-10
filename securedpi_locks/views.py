@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.views.generic import TemplateView
 from securedpi_locks.models import Lock
 from securedpi_locks.serializers import LockSerializer
 from rest_framework import generics
@@ -11,6 +12,18 @@ from rest_framework.reverse import reverse
 from rest_framework import renderers
 from rest_framework import viewsets
 from rest_framework.decorators import detail_route
+
+
+class DashboardView(TemplateView):
+    """Establish class for Dashboard page view."""
+    template_name = 'securedpi_locks/dashboard.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(DashboardView, self).get_context_data(**kwargs)
+        current_user = self.request.user
+        locks_by_created_date = current_user.locks.order_by('-date_created')
+        context['locks'] = locks_by_created_date
+        return context
 
 
 class LockViewSet(viewsets.ModelViewSet):

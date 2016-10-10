@@ -2,5 +2,17 @@
 {% block body %}
 <div class="meta">
   <h2><strong>Locks</strong></h2>
-</div>
+
+    <ul>
+      {% for lock in locks %}
+        <li class="locks">
+          <h3><strong>{{ lock.title }}</strong></h3>
+          <h4>Location: {{ lock.location }}</h4>
+          <h4>Locked: {{ lock.is_locked }}</h4>
+        </li>
+      {% endfor %}
+    </ul>
+
+  </div>
+
 {% endblock %}

@@ -10,8 +10,7 @@ router.register(r'locks', views.LockViewSet)
 
 urlpatterns = [
     url(r'^dashboard/',
-        login_required(TemplateView.as_view(
-            template_name='securedpi_locks/dashboard.html')),
+        login_required(views.DashboardView.as_view()),
         name='dashboard')
 ]
 
