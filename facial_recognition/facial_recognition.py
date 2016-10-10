@@ -17,7 +17,7 @@ member-2-b.gif .. and so on ..
 
 For accuracy, we recommend a minimum of __ pictures for each member.  It is also important that
 no other files be contained in the training directory besides the pictures.
-Just want to thank the creators of the tutorial at:
+Just want to thank the creators of the tutorials at:
 https://pythonprogramming.net/loading-video-python-opencv-tutorial/
 """
 
@@ -45,7 +45,7 @@ def train_recognizer(recognizer=cv2.face.createLBPHFaceRecognizer, image_path=TR
 	tr_files = os.listdir(image_path)
 	tr_files = [image_path + '/' + f for f in tr_files]
 	images = []		# image arrays of face cut-outs
-	members = []	# this will be the id of the members
+	members = []	# this will be the ids of the members
 	
 	for tr_f in tr_files:
 		print('training with file:' + tr_f)
