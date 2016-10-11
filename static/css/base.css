@@ -18,3 +18,51 @@ input {
   font-size: 1.4em;
   margin: 10px;
 }
+
+.locks, .column1, .column2{
+  list-style: none;
+}
+
+.column1 {
+  display: inline-block;
+  margin: auto 50px auto 50px;
+  width: 20%;
+}
+
+.column2 {
+  display: inline-block;
+  margin: auto 100px auto 100px;
+  width: 30%;
+}
+
+.column2 p {
+  margin-top: 5px;
+}
+
+.lock-panel {
+  background-color: #efefef;
+  width: 60%;
+  margin: 20px  auto;
+  border-radius: 10px;
+  max-height: auto;
+}
+
+.green {
+  color: green;
+}
+
+.purple {
+  color: purple;
+}
+
+.red {
+  color: red;
+}
+
+.grey {
+  color: grey;
+}
+
+ul {
+  text-align: justify;
+}

@@ -131,6 +131,7 @@ class LoginLogoutTestCase(TestCase):
         self.user.set_password('testpassword&#')
         self.user.save()
         self.home_url = reverse('homepage')
+        self.dashboard_url = reverse('dashboard')
         self.login_url = reverse('auth_login')
         self.logout_url = reverse('auth_logout')
         self.bad_login_response = self.client.post(
@@ -154,7 +155,7 @@ class LoginLogoutTestCase(TestCase):
 
     def test_redirected_to_homepage_after_logged_in(self):
         """Prove redirection to the home page after loggin in."""
-        self.assertEqual(self.login_response.url, self.home_url)
+        self.assertEqual(self.login_response.url, self.dashboard_url)
 
     def test_not_redirected_when_failed_login(self):
         """Prove that the user is not redirected if wrong credentials."""
@@ -170,7 +171,7 @@ class LoginLogoutTestCase(TestCase):
 
     def test_welcome_username_linked_to_page(self):
         """Test that 'Welcome, <username>' links to expected page."""
-        expected = 'href="{}"'.format(self.home_url)
+        expected = 'href="{}"'.format(self.dashboard_url)
         self.assertContains(self.login_response_follow, expected)
 
     def test_logout_button_exists(self):

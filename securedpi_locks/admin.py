@@ -1,4 +1,4 @@
 from django.contrib import admin
-from securedpi_locks.models import SecuredpiLock
+from securedpi_locks.models import Lock
 
-admin.site.register(SecuredpiLock)
+admin.site.register(Lock)

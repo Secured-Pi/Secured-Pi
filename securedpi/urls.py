@@ -16,6 +16,7 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from django.views.generic.base import TemplateView
+from securedpi_locks.urls import router
 
 
 urlpatterns = [
@@ -34,4 +35,10 @@ urlpatterns = [
         include('securedpi_locks.urls')),
     # url(r'^profile',
     #     include('securedpi_profile.urls')),
+]
+
+urlpatterns += [
+    url(r'^api/', include(router.urls)),
+    url(r'^api-auth/', include('rest_framework.urls',
+                               namespace='rest_framework')),
 ]
