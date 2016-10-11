@@ -14,6 +14,7 @@ from rest_framework import viewsets
 from rest_framework.decorators import detail_route
 import requests
 import json
+import uuid
 
 
 class DashboardView(TemplateView):
@@ -50,18 +51,34 @@ class LockViewSet(viewsets.ModelViewSet):
 
 def manual_unlock(request):
     if request.method == 'GET':
-        data = json.dumps({'action': 'unlock'})
+        serial = '00000000cfef42b5'
+        token = uuid.uuid4()
+        data = json.dumps(
+            {'action': 'unlock',
+             'serial': serial,
+             'token': token,
+             'type': 'manual'
+             }
+            )
         headers = {'content-type': 'application/json'}
         response = requests.post('http://52.43.75.183:5000', data=data, headers=headers)
-    return render(request, 'securedpi_locks/lock_details.html')
+    return render(request, 'securedpi_locks/dashboard.html')
 
 
 def manual_lock(request):
     if request.method == 'GET':
-        data = json.dumps({'action': 'lock'})
+        serial = '00000000cfef42b5'
+        token = uuid.uuid4()
+        data = json.dumps(
+            {'action': 'lock',
+             'serial': serial,
+             'token': 'token',
+             'type': 'manual'
+             }
+            )
         headers = {'content-type': 'application/json'}
         response = requests.post('http://52.43.75.183:5000', data=data, headers=headers)
-    return render(request, 'securedpi_locks/lock_details.html')
+    return render(request, 'securedpi_locks/dashboard.html')
 
 
 def update_status(request):
