@@ -15,7 +15,7 @@ class LockTestCase(TestCase):
             user=self.user,
             title='lock1',
             location='codefellows',
-            raspberry_pi_id='pi12345')
+            serial='pi12345')
         self.lock.save()
 
     def test_lock_exists(self):
@@ -23,15 +23,17 @@ class LockTestCase(TestCase):
         self.assertTrue(self.lock is not None)
 
     def test_attributes_correct(self):
-        """Prove the attributes are correct."""
+        """Prove the attributes of a lock are correct."""
         attr_vals = [
             ('user', self.user),
             ('title', 'lock1'),
             ('location', 'codefellows'),
             ('description', ''),
-            ('raspberry_pi_id', 'pi12345'),
+            ('serial', 'pi12345'),
             ('web_cam_id', ''),
-            ('is_locked', False)
+            ('status', 'unlocked'),
+            ('facial_recognition', False),
+            ('is_active', False)
         ]
         for key, val in attr_vals:
             self.assertEqual(getattr(self.lock, key), val)
@@ -55,14 +57,16 @@ class SetupTestCase(TestCase):
             user=self.user,
             title='lock1',
             location='codefellows',
-            raspberry_pi_id='pi12345')
+            serial='pi12345')
         self.lock1.save()
         self.lock2 = Lock(
             user=self.user,
             title='lock2',
             location='codefellows',
-            raspberry_pi_id='pi1234512345')
+            serial='pi1234512345')
         self.lock2.save()
+        self.expected1 = 'href="{}"'.format(reverse('manual_lock'))
+        self.expected2 = 'href="{}"'.format(reverse('manual_unlock'))
 
 
 class DashboardViewTestCase(SetupTestCase):
@@ -89,3 +93,49 @@ class DashboardViewTestCase(SetupTestCase):
     def test_correct_number_of_locks_on_dashboard(self):
         """Prove that correct number of locks renders on the dashboard."""
         self.assertEqual(self.response.context['locks'].count(), 2)
+
+    def test_buttons_display_if_unlocked(self):
+        """
+        Make sure <Lock> button shows up and <Unlock> doesn't
+        if the lock.status == 'unlocked'."""
+        self.lock1.status = 'unlocked'
+        self.lock1.is_active = True
+        self.lock1.save()
+        response = self.client.get(self.url)
+        self.assertContains(response, self.expected1)
+        self.assertNotContains(response, self.expected2)
+
+
+    def test_buttons_display_if_locked(self):
+        """
+        Make sure <Unlock> button shows up and <Lock> doesn't
+        if the lock.status == 'locked'."""
+        self.lock1.status = 'locked'
+        self.lock1.is_active = True
+        self.lock1.save()
+        response = self.client.get(self.url)
+        self.assertNotContains(response, self.expected1)
+        self.assertContains(response, self.expected2)
+
+
+    def test_buttons_display_if_pending(self):
+        """
+        Make sure <Unlock> and <Lock> buttons don't show up
+        if the lock.status == 'pending'."""
+        self.lock1.status = 'pending'
+        self.lock1.is_active = True
+        self.lock1.save()
+        response = self.client.get(self.url)
+        self.assertNotContains(response, self.expected1)
+        self.assertNotContains(response, self.expected2)
+
+
+    def test_buttons_display_if_not_active(self):
+        """
+        Make sure <Unlock> and <Lock> buttons don't show up
+        if the lock.is_active == False."""
+        self.lock1.is_active = False
+        self.lock1.save()
+        response = self.client.get(self.url)
+        self.assertNotContains(response, self.expected1)
+        self.assertNotContains(response, self.expected2)

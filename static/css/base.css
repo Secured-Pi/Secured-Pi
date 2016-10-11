@@ -19,7 +19,7 @@ input {
   margin: 10px;
 }
 
-.locks, .column1, .column2{
+.locks, .column1, .column2, .events{
   list-style: none;
 }
 

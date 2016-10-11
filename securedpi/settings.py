@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'bootstrap3',
     'securedpi_locks.apps.SecuredpiLocksConfig',
     'rest_framework',
+    'securedpi_events.apps.SecuredpiEventsConfig',
 ]
 
 MIDDLEWARE = [
@@ -178,3 +179,6 @@ DEBUG = os.environ.get('DEBUG', False)
 
 LOGIN_REDIRECT_URL = '/locks/dashboard/'
 LOGOUT_REDIRECT_URL = '/'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

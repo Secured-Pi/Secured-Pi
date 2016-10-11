@@ -16,8 +16,15 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from django.views.generic.base import TemplateView
-from securedpi_locks.urls import router
+from rest_framework.routers import DefaultRouter
+from django.conf import settings
+from django.conf.urls.static import static
+from securedpi import views
 
+
+router = DefaultRouter()
+router.register(r'locks', views.LockViewSet)
+router.register(r'events', views.EventViewSet)
 
 urlpatterns = [
     url(r'^admin/',
@@ -33,6 +40,8 @@ urlpatterns = [
         name='about'),
     url(r'^locks/',
         include('securedpi_locks.urls')),
+    url(r'^events/',
+        include('securedpi_events.urls')),
     # url(r'^profile',
     #     include('securedpi_profile.urls')),
 ]
@@ -42,3 +51,9 @@ urlpatterns += [
     url(r'^api-auth/', include('rest_framework.urls',
                                namespace='rest_framework')),
 ]
+
+if settings.DEBUG:
+    urlpatterns = urlpatterns + static(
+        settings.MEDIA_URL,
+        document_root=settings.MEDIA_ROOT
+        )

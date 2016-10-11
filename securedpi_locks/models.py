@@ -15,8 +15,8 @@ class Lock(models.Model):
     location = models.CharField(max_length=25)
     description = models.CharField(max_length=25, blank=True)
     date_created = models.DateField(auto_now_add=True)
-    data_modified = models.DateField(auto_now=True)
-    raspberry_pi_id = models.CharField(max_length=20)
+    date_modified = models.DateField(auto_now=True)
+    serial = models.CharField(max_length=20)
     web_cam_id = models.CharField(max_length=20, blank=True)
     status = models.CharField(
         max_length=8,
