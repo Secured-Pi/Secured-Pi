@@ -7,11 +7,14 @@ from securedpi_locks.models import Lock
 @python_2_unicode_compatible
 class Event(models.Model):
     """Define class for access events."""
-    lock_id = models.ForeignKey(
-        Lock,
-        related_name='events',
-        on_delete=models.CASCADE
-    )
+    # lock_id = models.ForeignKey(
+    #     Lock,
+    #     related_name='events',
+    #     on_delete=models.CASCADE
+    # )
+    lock_id = models.CharField(max_length=20, blank=True)
+    token = models.CharField(max_length=20, blank=True)
+    RFID = models.CharField(max_length=20, blank=True)
     photo = models.ImageField(
         upload_to='lock_photos',
         blank=True,
