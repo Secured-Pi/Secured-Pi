@@ -40,6 +40,8 @@ urlpatterns = [
         name='about'),
     url(r'^locks/',
         include('securedpi_locks.urls')),
+    url(r'^events/',
+        include('securedpi_events.urls')),
     # url(r'^profile',
     #     include('securedpi_profile.urls')),
 ]

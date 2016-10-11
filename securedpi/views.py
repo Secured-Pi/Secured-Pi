@@ -54,4 +54,4 @@ class EventViewSet(viewsets.ModelViewSet):
         return Response(lock.highlighted)
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+        serializer.save()
