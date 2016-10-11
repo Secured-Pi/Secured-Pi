@@ -13,19 +13,22 @@ urlpatterns = [
     url(r'^dashboard/',
         login_required(views.DashboardView.as_view()),
         name='dashboard'),
-    url(r'^(?P<pk>\d+)/$',
-        login_required(DetailView.as_view(
-            template_name='securedpi_locks/lock_details.html',
-            model=Lock,
-            context_object_name='lock'
-        )),
-        name='lock_details'),
+    # url(r'^(?P<pk>\d+)/$',
+    #     login_required(DetailView.as_view(
+    #         template_name='securedpi_locks/lock_details.html',
+    #         model=Lock,
+    #         context_object_name='lock'
+    #     )),
+    #     name='lock_details'),
     url(r'^manual/unlock/',
         login_required(views.manual_unlock),
         name='manual_unlock'),
     url(r'^manual/lock/',
         login_required(views.manual_lock),
         name='manual_lock'),
+    url(r'^update-status/',
+        login_required(views.update_status),
+        name='update_status'),
 ]
 
 

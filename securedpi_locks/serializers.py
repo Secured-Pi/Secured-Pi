@@ -11,4 +11,5 @@ class LockSerializer(serializers.ModelSerializer):
     class Meta:
         model = Lock
         fields = ('pk', 'user', 'title', 'location', 'description',
-                  'raspberry_pi_id', 'web_cam_id', 'is_locked')
+                  'raspberry_pi_id', 'web_cam_id', 'status',
+                  'is_active', 'facial_recognition')
