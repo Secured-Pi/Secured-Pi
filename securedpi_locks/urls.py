@@ -6,8 +6,8 @@ from securedpi_locks import views
 from securedpi_locks.models import Lock
 
 # Create a router and register our viewsets with it.
-router = DefaultRouter()
-router.register(r'locks', views.LockViewSet)
+# router = DefaultRouter()
+# router.register(r'locks', views.LockViewSet)
 
 urlpatterns = [
     url(r'^dashboard/',

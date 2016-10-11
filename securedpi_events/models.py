@@ -13,11 +13,11 @@ class Event(models.Model):
         on_delete=models.CASCADE
     )
     photo = models.ImageField(
-        upload_to='user_photos',
+        upload_to='lock_photos',
         blank=True,
         null=True)
     date_created = models.DateField(auto_now_add=True)
-    raspberry_pi_id = models.CharField(max_length=20)
+    serial = models.CharField(max_length=20)
     action_taken = models.CharField(
         max_length=8,
         choices=(
@@ -35,4 +35,4 @@ class Event(models.Model):
 
 
     def __str__(self):
-        return 'Event for {}'.format(self.lock)
+        return 'Event for {}'.format(self.lock_id)
