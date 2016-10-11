@@ -12,6 +12,8 @@ from rest_framework.reverse import reverse
 from rest_framework import renderers
 from rest_framework import viewsets
 from rest_framework.decorators import detail_route
+import requests
+import json
 
 
 class DashboardView(TemplateView):
@@ -44,3 +46,18 @@ class LockViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
+
+def manual_unlock(request):
+    if request.method == 'GET':
+        data = json.dumps({'action': 'unlock'})
+        headers = {'content-type': 'application/json'}
+        response = requests.post('http://52.43.75.183:5000', data=data, headers=headers)
+    return render(request, 'securedpi_locks/lock_details.html')
+
+def manual_lock(request):
+    if request.method == 'GET':
+        data = json.dumps({'action': 'lock'})
+        headers = {'content-type': 'application/json'}
+        response = requests.post('http://52.43.75.183:5000', data=data, headers=headers)
+    return render(request, 'securedpi_locks/lock_details.html')

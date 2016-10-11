@@ -9,6 +9,7 @@
           <h3><strong>{{ lock.title }}</strong></h3>
           <h4>Location: {{ lock.location }}</h4>
           <h4>Locked: {{ lock.is_locked }}</h4>
+          <a href="{% url 'lock_details' lock.pk %}">Details</a>
         </li>
       {% endfor %}
     </ul>
