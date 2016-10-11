@@ -15,7 +15,7 @@ class LockTestCase(TestCase):
             user=self.user,
             title='lock1',
             location='codefellows',
-            raspberry_pi_id='pi12345')
+            serial='pi12345')
         self.lock.save()
 
     def test_lock_exists(self):
@@ -29,7 +29,7 @@ class LockTestCase(TestCase):
             ('title', 'lock1'),
             ('location', 'codefellows'),
             ('description', ''),
-            ('raspberry_pi_id', 'pi12345'),
+            ('serial', 'pi12345'),
             ('web_cam_id', ''),
             ('status', 'unlocked'),
             ('facial_recognition', False),
@@ -57,13 +57,13 @@ class SetupTestCase(TestCase):
             user=self.user,
             title='lock1',
             location='codefellows',
-            raspberry_pi_id='pi12345')
+            serial='pi12345')
         self.lock1.save()
         self.lock2 = Lock(
             user=self.user,
             title='lock2',
             location='codefellows',
-            raspberry_pi_id='pi1234512345')
+            serial='pi1234512345')
         self.lock2.save()
         self.expected1 = 'href="{}"'.format(reverse('manual_lock'))
         self.expected2 = 'href="{}"'.format(reverse('manual_unlock'))
