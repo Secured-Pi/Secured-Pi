@@ -12,7 +12,7 @@ class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
         fields = ('pk', 'lock_id', 'photo', 'method', 'action_taken',
-                  'serial')
+                  'serial', 'token', 'RFID')
 
 
 class LockSerializer(serializers.ModelSerializer):
