@@ -52,7 +52,7 @@ class LockViewSet(viewsets.ModelViewSet):
 def manual_unlock(request):
     if request.method == 'GET':
         serial = '00000000cfef42b5'
-        token = uuid.uuid4()
+        token = str(uuid.uuid4())
         data = json.dumps(
             {'action': 'unlock',
              'serial': serial,
@@ -68,7 +68,7 @@ def manual_unlock(request):
 def manual_lock(request):
     if request.method == 'GET':
         serial = '00000000cfef42b5'
-        token = uuid.uuid4()
+        token = str(uuid.uuid4())
         data = json.dumps(
             {'action': 'lock',
              'serial': serial,

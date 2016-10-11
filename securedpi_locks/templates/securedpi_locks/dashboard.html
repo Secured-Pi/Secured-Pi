@@ -8,7 +8,7 @@
           <li class="column1">
             <h3><strong>{{ lock.title }}</strong></h3>
             <p>({{ lock.pk }}, serial: {{ lock.raspberry_pi_id }})</p>
-            {% if lock.is_active %}
+            <!-- {% if lock.is_active %}
               {% if lock.status == 'locked' %}
                 <h4>status: <span class="green">LOCKED</span></h4>
                 <a href="{% url 'manual_unlock'  %}"><input type='button' class="btn btn-primary btn-lg btn-block" value='Unlock'></a>
@@ -18,6 +18,15 @@
                 <h4>status: <span class="red">UNLOCKED</span></h4>
                 <a href="{% url 'manual_lock'  %}"><input type='button' class="btn btn-primary btn-lg btn-block" value='Lock'></a>
               {% endif %}
+            {% else %}
+              <h4><span class="grey">NOT ACTIVE</span></h4>
+            {% endif %} -->
+            {% if lock.is_active %}
+
+              <h4> {{ lock.status }}</h5>
+                <a href="{% url 'manual_unlock'  %}"><input type='button' class="btn btn-primary btn-lg btn-block" value='Unlock'></a>
+                <a href="{% url 'manual_lock'  %}"><input type='button' class="btn btn-primary btn-lg btn-block" value='Lock'></a>
+
             {% else %}
               <h4><span class="grey">NOT ACTIVE</span></h4>
             {% endif %}
