@@ -16,15 +16,10 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from django.views.generic.base import TemplateView
-from rest_framework.routers import DefaultRouter
 from django.conf import settings
 from django.conf.urls.static import static
-from securedpi import views
+from securedpi_api.urls import router
 
-
-router = DefaultRouter()
-router.register(r'locks', views.LockViewSet)
-router.register(r'events', views.EventViewSet)
 
 urlpatterns = [
     url(r'^admin/',

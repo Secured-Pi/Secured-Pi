@@ -2,19 +2,17 @@ from django.shortcuts import render
 from django.views.generic import TemplateView
 from securedpi_events.models import Event
 from securedpi_locks.models import Lock
-from securedpi.serializers import EventSerializer, LockSerializer
+from securedpi_api.serializers import EventSerializer, LockSerializer
 from rest_framework import generics
 from rest_framework import permissions
-from securedpi.permissions import IsOwnerOrReadOnly
+from securedpi_api.permissions import IsOwnerOrReadOnly
 # from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from rest_framework import renderers
 from rest_framework import viewsets
 from rest_framework.decorators import detail_route
-# import requests
-# import json
-# import uuid
+
 
 
 class LockViewSet(viewsets.ModelViewSet):

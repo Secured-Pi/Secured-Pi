@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'securedpi_locks.apps.SecuredpiLocksConfig',
     'rest_framework',
     'securedpi_events.apps.SecuredpiEventsConfig',
+    'securedpi_api.apps.SecuredpiApiConfig',
 ]
 
 MIDDLEWARE = [
