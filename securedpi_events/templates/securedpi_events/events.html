@@ -9,7 +9,7 @@
           <li class="events">
             <h3><strong>Lock #{{ event.lock_id }}</strong></h3>
             <p>access time: {{ event.date_created }}</p>
-            <p>access method: {{ event.method }}</p>
+            <p>access method: {{ event.mtype }}</p>
             <p>action taken: {{ event.action_taken }}</p>
             {% if event.photo %}
               <p><img class="thumbnail" src="{{ event.photo.url }}"></p>

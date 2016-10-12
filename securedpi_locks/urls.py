@@ -19,15 +19,14 @@ urlpatterns = [
     # url(r'^manual/lock/(?P<pk>\d+)/$',
     #     login_required(views.manual_lock),
     #     name='manual_lock'),
-    url(r'^manual/unlock/',
-        login_required(views.manual_unlock),
+    url(r'^manual-unlock/(?P<pk>\d+)/$',
+        login_required(views.manual_action),
+        kwargs={'action': 'unlock'},
         name='manual_unlock'),
-    url(r'^manual/lock/',
-        login_required(views.manual_lock),
+    url(r'^manual-lock/(?P<pk>\d+)/$',
+        login_required(views.manual_action),
+        kwargs={'action': 'lock'},
         name='manual_lock'),
-    url(r'^update-status/',
-        login_required(views.update_status),
-        name='update_status'),
 ]
 
 
