@@ -12,34 +12,17 @@ import json
 @python_2_unicode_compatible
 class Event(models.Model):
     """Define class for access events."""
-    # lock_id = models.ForeignKey(
-    #     Lock,
-    #     related_name='events',
-    #     on_delete=models.CASCADE
-    # )
     lock_id = models.CharField(max_length=20, blank=True)
-    token = models.CharField(max_length=20, blank=True)
+    action = models.CharField(max_length=30, blank=True)
     RFID = models.CharField(max_length=20, blank=True)
     photo = models.ImageField(
         upload_to='lock_photos',
         blank=True,
         null=True)
-    date_created = models.DateField(auto_now_add=True)
+    date_created = models.DateTimeField(auto_now_add=True)
     serial = models.CharField(max_length=20)
-    action_taken = models.CharField(
-        max_length=8,
-        choices=(
-            ('locked', 'locked'),
-            ('unlocked', 'unlocked'),
-        ),
-        blank=True)
-    method = models.CharField(
-        max_length=8,
-        choices=(
-            ('manual', 'manual'),
-            ('fr', 'fr'),
-        ),
-        blank=True)
+    action_taken = models.CharField(max_length=20, blank=True)
+    mtype = models.CharField(max_length=20)
 
 
     def __str__(self):
