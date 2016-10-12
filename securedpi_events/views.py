@@ -9,7 +9,6 @@ class EventView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(EventView, self).get_context_data(**kwargs)
-        all_events = Event.objects.order_by('-date_created').all()
+        all_events = Event.objects.filter(lock_id=kwargs['pk']).order_by('-date_created').all()
         context['events'] = all_events
-        #import pdb; pdb.set_trace()
         return context
