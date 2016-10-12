@@ -5,8 +5,6 @@ from securedpi_locks.models import Lock
 from securedpi_api.serializers import EventSerializer, LockSerializer
 from rest_framework import generics
 from rest_framework import permissions
-from securedpi_api.permissions import IsOwnerOrReadOnly
-# from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from rest_framework import renderers
@@ -34,6 +32,7 @@ class LockViewSet(viewsets.ModelViewSet):
         lock = get_object_or_404(queryset, pk=pk)
         serializer = LockSerializer(lock)
         return Response(serializer.data)
+
 
     @detail_route(renderer_classes=[renderers.StaticHTMLRenderer])
     def highlight(self, request, *args, **kwargs):
