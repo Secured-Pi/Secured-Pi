@@ -11,8 +11,8 @@ class EventSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Event
-        fields = ('pk', 'lock_id', 'photo', 'method', 'action_taken',
-                  'serial', 'token', 'RFID')
+        fields = ('pk', 'lock_id', 'photo', 'mtype', 'action_taken',
+                  'serial', 'action', 'RFID', 'date_created')
 
 
 class LockSerializer(serializers.ModelSerializer):
@@ -22,6 +22,6 @@ class LockSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Lock
-        fields = ('pk', 'user', 'title', 'location', 'description',
-                  'serial', 'web_cam_id', 'status',
-                  'is_active', 'facial_recognition')
+        fields = ('pk', 'user', 'name', 'location', 'description',
+                  'serial', 'status', 'is_active', 'facial_recognition',
+                  'date_created', 'date_modified')

@@ -19,20 +19,30 @@ input {
   margin: 10px;
 }
 
-.locks, .column1, .column2, .events{
+.locks, .column1, .column2, .column3, .events{
   list-style: none;
 }
 
 .column1 {
   display: inline-block;
   margin: auto 50px auto 50px;
-  width: 20%;
+  width: 30%;
 }
 
 .column2 {
   display: inline-block;
   margin: auto 100px auto 100px;
-  width: 30%;
+  width: 35%;
+}
+
+.column2 a {
+  te
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.column3 {
+  display: inline-block;
 }
 
 .column2 p {
@@ -41,7 +51,7 @@ input {
 
 .lock-panel {
   background-color: #efefef;
-  width: 60%;
+  width: 70%;
   margin: 20px  auto;
   border-radius: 10px;
   max-height: auto;
@@ -65,4 +75,20 @@ input {
 
 ul {
   text-align: justify;
+}
+
+.log-btn {
+  width: 30%;
+}
+
+.events > * {
+  display: inline-block;
+  margin: 5px 20px 5px 20px;
+}
+
+.thumbnail {
+  max-width: 100px;
+  max-height: 100px;
+  margin-top: 10px;
+  margin-bottom: 0;
 }

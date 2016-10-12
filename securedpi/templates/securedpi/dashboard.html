@@ -1,23 +1,39 @@
 {% extends "securedpi/base.html" %}
 {% block body %}
+
+
 <div class="meta">
   <h2><strong>My Locks</strong></h2>
       <ul>
         {% for lock in locks %}
         <div class='lock-panel'>
           <li class="column1">
-            <h3><strong>{{ lock.title }}</strong></h3>
-            <p>({{ lock.pk }}, serial: {{ lock.serial }})</p>
+            <h3><strong>{{ lock.name }}</strong></h3>
+            <p>(lock id# {{ lock.pk }}, serial#: {{ lock.serial }})</p>
             {% if lock.is_active %}
+
               {% if lock.status == 'locked' %}
                 <h4>status: <span class="green">LOCKED</span></h4>
-                <a href="{% url 'manual_unlock'  %}"><input type='button' class="btn btn-primary btn-lg btn-block" value='Unlock'></a>
+                <a href="{% url 'manual_unlock' pk=lock.pk action='unlock' %}">
+                  <input type='button' class="btn btn-primary btn-lg btn-block" value='Unlock'>
+                </a>
+
               {% elif lock.status == 'pending' %}
                 <h4>status: <span class="purple">PENDING</span></h4>
+                <a href="{% url 'manual_unlock' pk=lock.pk action='unlock' %}">
+                  <input type='button' class="btn btn-primary" value='Unlock'>
+                </a>
+                <a href="{% url 'manual_lock' pk=lock.pk action='lock' %}">
+                  <input type='button' class="btn btn-primary" value='Lock'>
+                </a>
+
               {% else %}
                 <h4>status: <span class="red">UNLOCKED</span></h4>
-                <a href="{% url 'manual_lock'  %}"><input type='button' class="btn btn-primary btn-lg btn-block" value='Lock'></a>
+                <a href="{% url 'manual_lock' pk=lock.pk action='lock' %}">
+                  <input type='button' class="btn btn-primary btn-lg btn-block" value='Lock'>
+                </a>
               {% endif %}
+
             {% else %}
               <h4><span class="grey">NOT ACTIVE</span></h4>
             {% endif %}
@@ -30,11 +46,16 @@
             <p><strong>Date created:</strong> {{ lock.date_created }}</p>
             <p><strong>Date modified:</strong> {{ lock.data_modified }}</p>
             <a href="">Edit</a>
+            <a href="{% url 'events' lock.pk %}"><input type="button" class="log-btn" value="Access Log"></a>
           </li>
 
         </div>
         {% endfor %}
       </ul>
   </div>
+
+  <script>
+  setTimeout(function(){window.location=window.location;}, 5000);
+  </script>
 
 {% endblock %}
