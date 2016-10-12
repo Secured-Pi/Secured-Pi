@@ -6,9 +6,6 @@ from securedpi_locks.models import Lock
 
 
 urlpatterns = [
-    url(r'^dashboard/',
-        login_required(views.DashboardView.as_view()),
-        name='dashboard'),
     # url(r'^(?P<pk>\d+)/$',
     #     login_required(DetailView.as_view(
     #         template_name='securedpi_locks/lock_details.html',

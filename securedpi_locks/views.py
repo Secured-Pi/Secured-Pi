@@ -5,18 +5,6 @@ import json
 import uuid
 
 
-class DashboardView(TemplateView):
-    """Establish class for Dashboard page view."""
-    template_name = 'securedpi_locks/dashboard.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(DashboardView, self).get_context_data(**kwargs)
-        current_user = self.request.user
-        locks_by_created_date = current_user.locks.order_by('-date_created')
-        context['locks'] = locks_by_created_date
-        return context
-
-
 def manual_unlock(request):
     if request.method == 'GET':
         serial = '00000000cfef42b5'
@@ -61,4 +49,4 @@ def update_status(request):
         headers = {'content-type': 'application/json'}
         response = requests.put('http://localhost:8000/api/locks/4/', auth=auth, data=data, headers=headers)
         #import pdb; pdb.set_trace()
-    return render(request, 'securedpi_locks/dashboard.html')
+    return render(request, 'securedpi/dashboard.html')

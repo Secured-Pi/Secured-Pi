@@ -19,7 +19,7 @@ input {
   margin: 10px;
 }
 
-.locks, .column1, .column2, .column3 .events{
+.locks, .column1, .column2, .column3, .events{
   list-style: none;
 }
 
@@ -43,8 +43,6 @@ input {
 
 .column3 {
   display: inline-block;
-  /*margin: auto 50px auto 50px;*/
-  /*width: 20%;*/
 }
 
 .column2 p {
@@ -81,4 +79,16 @@ ul {
 
 .log-btn {
   width: 30%;
+}
+
+.events > * {
+  display: inline-block;
+  margin: 5px 20px 5px 20px;
+}
+
+.thumbnail {
+  max-width: 100px;
+  max-height: 100px;
+  margin-top: 10px;
+  margin-bottom: 0;
 }
