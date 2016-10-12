@@ -4,3 +4,4 @@ LOG:  database system is ready to accept connections
 LOG:  autovacuum launcher started
 FATAL:  database "steven" does not exist
 FATAL:  database "steven" does not exist
+LOG:  received SIGHUP, reloading configuration files
