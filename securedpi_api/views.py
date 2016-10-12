@@ -12,7 +12,7 @@ from rest_framework.reverse import reverse
 from rest_framework import renderers
 from rest_framework import viewsets
 from rest_framework.decorators import detail_route
-
+from django.shortcuts import get_object_or_404
 
 
 class LockViewSet(viewsets.ModelViewSet):
@@ -23,8 +23,17 @@ class LockViewSet(viewsets.ModelViewSet):
     """
     queryset = Lock.objects.all()
     serializer_class = LockSerializer
-    # permission_classes = (permissions.IsAuthenticatedOrReadOnly,
-    #                       IsOwnerOrReadOnly,)
+
+    def list(self, request):
+        queryset = Lock.objects.filter(user=request.user)
+        serializer = LockSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def retrieve(self, request, pk=None):
+        queryset = Lock.objects.filter(user=request.user)
+        lock = get_object_or_404(queryset, pk=pk)
+        serializer = LockSerializer(lock)
+        return Response(serializer.data)
 
     @detail_route(renderer_classes=[renderers.StaticHTMLRenderer])
     def highlight(self, request, *args, **kwargs):
