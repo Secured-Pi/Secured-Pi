@@ -6,6 +6,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 import requests
 from facial_recognition.facial_recognition import test_individual
+import json
 
 
 @python_2_unicode_compatible
