@@ -15,7 +15,9 @@
             <p>pi serial: {{ event.serial}}</p>
             <p>access method: {{ event.method }}</p>
             <p>action taken: {{ event.action_taken }}</p>
-            <p>{{ event.photo}}</p>
+            {% if event.photo %}
+              <p><img src="{{ event.photo.url }}"></p>
+            {% endif %}
           </li>
 
         </div>
