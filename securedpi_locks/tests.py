@@ -13,7 +13,7 @@ class LockTestCase(TestCase):
         self.user.save()
         self.lock = Lock(
             user=self.user,
-            title='lock1',
+            name='lock1',
             location='codefellows',
             serial='pi12345')
         self.lock.save()
@@ -26,11 +26,10 @@ class LockTestCase(TestCase):
         """Prove the attributes of a lock are correct."""
         attr_vals = [
             ('user', self.user),
-            ('title', 'lock1'),
+            ('name', 'lock1'),
             ('location', 'codefellows'),
             ('description', ''),
             ('serial', 'pi12345'),
-            ('web_cam_id', ''),
             ('status', 'unlocked'),
             ('facial_recognition', False),
             ('is_active', False)
@@ -55,18 +54,20 @@ class SetupTestCase(TestCase):
         self.client.force_login(user=self.user)
         self.lock1 = Lock(
             user=self.user,
-            title='lock1',
+            name='lock1',
             location='codefellows',
             serial='pi12345')
         self.lock1.save()
         self.lock2 = Lock(
             user=self.user,
-            title='lock2',
+            name='lock2',
             location='codefellows',
             serial='pi1234512345')
         self.lock2.save()
-        self.expected1 = 'href="{}"'.format(reverse('manual_lock'))
-        self.expected2 = 'href="{}"'.format(reverse('manual_unlock'))
+        self.expected1 = 'href="{}"'.format(
+            reverse('manual_lock', kwargs={'pk': self.lock1.pk, 'action': 'lock'}))
+        self.expected2 = 'href="{}"'.format(
+            reverse('manual_unlock', kwargs={'pk': self.lock1.pk, 'action': 'unlock'}))
 
 
 class DashboardViewTestCase(SetupTestCase):
@@ -76,7 +77,7 @@ class DashboardViewTestCase(SetupTestCase):
         self.setUp = super(DashboardViewTestCase, self).setUp()
         self.url = reverse('dashboard')
         self.response = self.client.get(self.url)
-        self.template = 'securedpi_locks/dashboard.html'
+        self.template = 'securedpi/dashboard.html'
 
     def test_auth_user_has_access_to_dashboard(self):
         """Prove that response code is 200 for auth users."""
@@ -120,14 +121,14 @@ class DashboardViewTestCase(SetupTestCase):
 
     def test_buttons_display_if_pending(self):
         """
-        Make sure <Unlock> and <Lock> buttons don't show up
+        Make sure both <Unlock> and <Lock> buttons show up
         if the lock.status == 'pending'."""
         self.lock1.status = 'pending'
         self.lock1.is_active = True
         self.lock1.save()
         response = self.client.get(self.url)
-        self.assertNotContains(response, self.expected1)
-        self.assertNotContains(response, self.expected2)
+        self.assertContains(response, self.expected1)
+        self.assertContains(response, self.expected2)
 
 
     def test_buttons_display_if_not_active(self):

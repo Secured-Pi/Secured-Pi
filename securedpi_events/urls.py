@@ -5,7 +5,7 @@ from securedpi_events import views
 
 
 urlpatterns = [
-    url(r'^$',
+    url(r'^(?P<pk>\d+)/$',
         login_required(views.EventView.as_view()),
         name='events'),
 ]

@@ -8,11 +8,12 @@ from django.urls import reverse
 class EventTestCase(TestCase):
     """Create test class for Event model."""
     def setUp(self):
-        """Set up a fake user with a lock."""
+        """Setup for test."""
         self.event = Event(
             lock_id='123',
             serial='test_serial',
-            token='test_token'
+            mtype='manual',
+            action='lock'
         )
         self.event.save()
 
@@ -25,9 +26,9 @@ class EventTestCase(TestCase):
         attr_vals = [
             ('lock_id', '123'),
             ('serial', 'test_serial'),
-            ('token', 'test_token'),
-            ('action_taken', ''),
-            ('method', ''),
+            ('status', ''),
+            ('mtype', 'manual'),
+            ('action', 'lock'),
             ('photo', None)
         ]
         for key, val in attr_vals:

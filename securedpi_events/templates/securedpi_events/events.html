@@ -1,22 +1,19 @@
 {% extends "securedpi/base.html" %}
 {% block body %}
 <div class="meta">
-  <h2><strong>Events Log</strong></h2>
+  <h2><strong>Access Log</strong></h2>
       <ul>
         {% for event in events %}
         <div class='lock-panel'>
 
           <li class="events">
-            <h3><strong>Lock #{{ event.lock_id.title }}</strong></h3>
-            <p>lock id: {{ event.lock_id}}</p>
-            <p>token: {{ event.token }}</p>
-            <p>RFID: {{ event.RFID }}</p>
-            <p>date created: {{ event.date_created }}</p>
-            <p>pi serial: {{ event.serial}}</p>
-            <p>access method: {{ event.method }}</p>
-            <p>action taken: {{ event.action_taken }}</p>
+            <h3><strong>Lock #{{ event.lock_id }}</strong></h3>
+            <p>access time: {{ event.date_created }}</p>
+            <p>access method: {{ event.mtype }}</p>
+            <p>requested: {{ event.action }}</p>
+            <p>result: {{ event.status }}</p>
             {% if event.photo %}
-              <p><img src="{{ event.photo.url }}"></p>
+              <p><img class="thumbnail" src="{{ event.photo.url }}"></p>
             {% endif %}
           </li>
 
