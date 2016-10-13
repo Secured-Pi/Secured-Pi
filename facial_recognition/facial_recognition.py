@@ -84,7 +84,7 @@ def test_individual(image_to_test, threshold=40,
     """
     recognizer = recognizer()
     recognizer.load(recog_model)
-
+    # image_array = np.array(Image.open(image_to_test).convert('L'), 'uint8')
     image_array = np.array(Image.open('/home/ubuntu/checkout' + image_to_test).convert('L'), 'uint8')
     curr_face = FACE_CASCADE.detectMultiScale(image_array)[0]
     x, y, w, h = curr_face
@@ -94,6 +94,4 @@ def test_individual(image_to_test, threshold=40,
     if verbose is True:
         print('member number: {}, confidence: {}'.format(member_prediction,
                                                          confidence))
-    if confidence > threshold:
-        return False
-    return True
+    return (member_prediction, confidence)
