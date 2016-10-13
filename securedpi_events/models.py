@@ -37,17 +37,17 @@ def start_FR(sender, **kwargs):
     """
     event = kwargs['instance']
     if event.photo:
-        dj_decision = test_individual(event.photo.url, verbose=True, threshold=55)
+        dj_decision = test_individual(event.photo.url, verbose=True)
         print('face recognized: ', dj_decision)
         lock = Lock.objects.get(pk=event.lock_id)
-        if dj_decision and event.RFID == lock.RFID:
+        if dj_decision[0] == lock.user.pk and dj_decision[1] < 42 and event.RFID == lock.RFID:
             serial = lock.serial
             data = {
                 'event_id': event.pk,
                 'action': 'unlock',
                 'serial': serial,
                 'mtype': 'fr'
-                }
+            }
             lock.status = 'pending'
             lock.save()
             response = requests.post('http://52.43.75.183:5000', json=data)
