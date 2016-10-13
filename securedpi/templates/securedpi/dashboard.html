@@ -45,7 +45,7 @@
             <p><strong>Facial recognition enabled:</strong> {{ lock.facial_recognition }}</p>
             <p><strong>Date created:</strong> {{ lock.date_created }}</p>
             <p><strong>Date modified:</strong> {{ lock.data_modified }}</p>
-            <a href="">Edit</a>
+            <a href="{% url 'edit_lock' lock.pk %}">Edit</a>
             <a href="{% url 'events' lock.pk %}"><input type="button" class="log-btn" value="Access Log"></a>
           </li>
 

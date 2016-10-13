@@ -1,0 +1,20 @@
+{% extends "securedpi/base.html" %}
+{% block body %}
+<main class="meta">
+  <section class="row">
+
+    {% if form.errors %}
+      {{ form.errors }}
+    {% endif %}
+
+    <form action="" method="post" class="form-edit">
+    {% csrf_token %}
+
+      {{ form }}
+
+      <button class="btn btn-lg btn-success" type="submit">Update</button>
+    </form>
+
+  </section>
+</main>
+{% endblock %}
