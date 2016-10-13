@@ -2,6 +2,9 @@
 {% block body %}
 <div class="meta">
   <h2><strong>Access Log</strong></h2>
+  <a href="{% url 'delete_old_events' pk=lock_id %}">
+    <input type="button" value="Delete 10 oldest events" class="btn btn-primary">
+  </a>
       <ul>
         {% for event in events %}
         <div class='lock-panel'>

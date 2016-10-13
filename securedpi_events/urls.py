@@ -8,4 +8,7 @@ urlpatterns = [
     url(r'^(?P<pk>\d+)/$',
         login_required(views.EventView.as_view()),
         name='events'),
+    url(r'^(?P<pk>\d+)/delete-old-events/$',
+        login_required(views.delete_old_events),
+        name='delete_old_events'),
 ]

@@ -1,7 +1,11 @@
 {% extends "securedpi/base.html" %}
 {% block body %}
-  <form action"" method="post">{% csrf_token %}
-    <p>Are you sure you want to delete "{{ object }}"?</p>
-    <input type="submit" value="Confirm" />
-  </form>
+
+  <main class="meta">
+    <form action"" method="post">{% csrf_token %}
+      <h3>Are you sure you want to delete "{{ object }}"?</h3>
+      <input class="btn btn-lg btn-danger" type="submit" value="Delete" />
+    </form>
+  </main>
+
 {% endblock %}
