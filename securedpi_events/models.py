@@ -32,7 +32,7 @@ class Event(models.Model):
 def start_FR(sender, **kwargs):
     event = kwargs['instance']
     if event.photo:
-        dj_decision = test_individual(event.photo.url)
+        dj_decision = test_individual(event.photo.url, verbose=True, threshold=55)
         print('face recognized: ', dj_decision)
         lock = Lock.objects.get(pk=event.lock_id)
         if dj_decision and event.RFID == lock.RFID:
@@ -46,6 +46,6 @@ def start_FR(sender, **kwargs):
             lock.status = 'pending'
             lock.save()
             response = requests.post('http://52.43.75.183:5000', json=data)
-
-        else:
-            event.delete()
+        #
+        # else:
+        #     event.delete()

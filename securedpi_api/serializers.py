@@ -24,4 +24,4 @@ class LockSerializer(serializers.ModelSerializer):
         model = Lock
         fields = ('pk', 'user', 'name', 'location', 'description',
                   'serial', 'status', 'is_active', 'facial_recognition',
-                  'date_created', 'date_modified')
+                  'date_created', 'date_modified', 'RFID')

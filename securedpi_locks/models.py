@@ -20,6 +20,7 @@ class Lock(models.Model):
     status = models.CharField(max_length=20, default='unlocked')
     is_active = models.BooleanField(default=False)
     facial_recognition = models.BooleanField(default=False)
+    RFID = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
         return 'Lock for {}'.format(self.user)
