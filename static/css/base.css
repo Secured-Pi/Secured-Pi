@@ -93,6 +93,6 @@ ul {
   margin-bottom: 0;
 }
 
-.form-edit label {
-  display: block;
+.form-edit input {
+  margin-right: 10px;
 }
