@@ -11,6 +11,7 @@ from facial_recognition.facial_recognition import test_individual
 @python_2_unicode_compatible
 class Event(models.Model):
     """Define class for access events."""
+
     lock_id = models.CharField(max_length=20, blank=True)
     action = models.CharField(max_length=30, default='unlock')
     RFID = models.CharField(max_length=100, blank=True)
@@ -23,8 +24,8 @@ class Event(models.Model):
     status = models.CharField(max_length=20, default='failed')
     mtype = models.CharField(max_length=20)
 
-
     def __str__(self):
+        """Show event."""
         return 'Event for {}'.format(self.lock_id)
 
 

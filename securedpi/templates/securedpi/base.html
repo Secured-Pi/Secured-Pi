@@ -7,7 +7,6 @@
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
   {% load static %}
   <link type="text/css" rel="stylesheet" href="{% static "css/base.css" %}" charset="utf-8">
-  <script type="text/javascript" src="{{ STATIC_ROOT }}/static/js/jquery-3.1.1.min.js"></script>
 </head>
 
 <header>
@@ -17,6 +16,7 @@
         <a class="nav-link" href="{% url 'dashboard' %}">Welcome, {{ user.username }}</a>
         <a class="nav-link" href="{% url 'profile' %}">Profile</a>
         <a class="nav-link" href="{% url 'auth_logout' %}">Log Out</a>
+        <a class="nav-link" href="{% url 'securedpi_facerec:train' %}">Train</a>
       {% endif %}
       <a class="nav-link" href="{% url 'about' %}">About</a>
     </div>
@@ -24,8 +24,9 @@
 
 <body>
   {% block body %} {% endblock %}
+
+  <script type="text/javascript" src="{{ STATIC_ROOT }}/static/js/jquery-3.1.1.min.js"></script>
+  {% block js %} {% endblock %}
 </body>
 
-<footer>
-</footer>
 </html>
