@@ -140,3 +140,62 @@ class DashboardViewTestCase(SetupTestCase):
         response = self.client.get(self.url)
         self.assertNotContains(response, self.expected1)
         self.assertNotContains(response, self.expected2)
+
+
+class EditLockTestCase(SetupTestCase):
+    """Define test case class for lock editing."""
+    def setUp(self):
+        """Set up for the test case class."""
+        self.setUp = super(EditLockTestCase, self).setUp()
+        self.url = reverse('edit_lock', kwargs={'pk': self.lock1.pk})
+        self.response = self.client.get(self.url)
+        self.template = 'securedpi_locks/edit_lock.html'
+        self.data = {
+            "name": 'lock1_updated',
+            "location": "codefellows",
+            "description": "closet",
+            "serial": "pi12345"
+        }
+
+    def test_auth_user_have_access_to_lock_edit(self):
+        """Prove that auth user has access to the lock edit."""
+        self.assertEqual(self.response.status_code, 200)
+
+    def test_right_template_is_used(self):
+        """Prove that right template is used to render edit lock page."""
+        self.assertTemplateUsed(self.response, self.template)
+
+    def test_form_present_in_context(self):
+        """Prove that form is present in response context."""
+        self.assertIn('form', self.response.context)
+
+    def test_redirect_on_update_from_edit_lock_page(self):
+        """Prove redirection to dashboard page after updating a lock."""
+        response = self.client.post(self.url, self.data)
+        self.assertEquals(response.status_code, 302)
+        self.assertEquals(response.url, reverse('dashboard'))
+
+    def test_lock_info_updated(self):
+        """Prove that lock info was updated."""
+        self.assertEqual(self.lock1.name, 'lock1')
+        self.assertEqual(self.lock1.location, 'codefellows')
+        self.assertEqual(self.lock1.serial,'pi12345')
+        self.assertEqual(self.lock1.description, '')
+        self.client.post(self.url, self.data)
+        lock1 = Lock.objects.filter(user=self.user).first()
+        self.assertEqual(lock1.name, 'lock1_updated')
+        self.assertEqual(lock1.description, 'closet')
+        self.assertEqual(lock1.location, 'codefellows')
+        self.assertEqual(lock1.serial,'pi12345')
+
+    def test_number_of_locks_didnt_change(self):
+        """
+        Prove that after updating a lock, the total number of locks
+        didn't change.
+        """
+        # number of locks before update
+        count1 = self.user.locks.all().count()
+        self.client.post(self.url, self.data)
+        # number of locks after update
+        count2 = self.user.locks.all().count()
+        self.assertEqual(count1, count2)
