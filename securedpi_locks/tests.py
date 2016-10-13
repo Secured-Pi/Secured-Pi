@@ -42,6 +42,29 @@ class LockTestCase(TestCase):
         self.assertTrue(self.user.locks.count(), 1)
 
 
+class LockAccessCase(TestCase):
+    """
+    Make sure unauth users redirected to login page when trying accessing
+    'locks/' urls.
+    """
+    def test_no_access_to_events_if_unath(self):
+        """Prove redirection to the login page."""
+        urls = [
+            reverse('edit_lock', kwargs={'pk': 1}),
+            reverse('delete_lock', kwargs={'pk': 1}),
+            reverse('manual_unlock', kwargs={'pk': 1}),
+            reverse('manual_lock', kwargs={'pk': 1}),
+        ]
+        login_url = reverse('auth_login')
+        for url in urls:
+            response = self.client.get(url, follow=True)
+            expected_url = '{}?next={}'.format(login_url, url)
+            expected = (expected_url, 302)
+            self.assertEqual(response.status_code, 200)
+            self.assertEqual(len(response.redirect_chain), 1)
+            self.assertTupleEqual(response.redirect_chain[0], expected)
+
+            
 class SetupTestCase(TestCase):
     """
     Define class for tests setup. All other test classes inherit
@@ -70,73 +93,60 @@ class SetupTestCase(TestCase):
             reverse('manual_unlock', kwargs={'pk': self.lock1.pk, 'action': 'unlock'}))
 
 
-class DashboardViewTestCase(SetupTestCase):
-    """Define test class for Dashboard view."""
+class EditLockTestCase(SetupTestCase):
+    """Define test case class for lock editing."""
     def setUp(self):
-        """Define setup for tests."""
-        self.setUp = super(DashboardViewTestCase, self).setUp()
-        self.url = reverse('dashboard')
+        """Set up for the test case class."""
+        self.setUp = super(EditLockTestCase, self).setUp()
+        self.url = reverse('edit_lock', kwargs={'pk': self.lock1.pk})
         self.response = self.client.get(self.url)
-        self.template = 'securedpi/dashboard.html'
+        self.template = 'securedpi_locks/edit_lock.html'
+        self.data = {
+            "name": 'lock1_updated',
+            "location": "codefellows",
+            "description": "closet",
+            "serial": "pi12345"
+        }
 
-    def test_auth_user_has_access_to_dashboard(self):
-        """Prove that response code is 200 for auth users."""
-        self.assertEquals(self.response.status_code, 200)
+    def test_auth_user_have_access_to_lock_edit(self):
+        """Prove that auth user has access to the lock edit."""
+        self.assertEqual(self.response.status_code, 200)
 
     def test_right_template_is_used(self):
-        """Prove that right template is used to render page."""
+        """Prove that right template is used to render edit lock page."""
         self.assertTemplateUsed(self.response, self.template)
 
-    def test_locks_in_context(self):
-        """Prove that 'locks' are in response context."""
-        self.assertIn('locks', self.response.context)
+    def test_form_present_in_context(self):
+        """Prove that form is present in response context."""
+        self.assertIn('form', self.response.context)
 
-    def test_correct_number_of_locks_on_dashboard(self):
-        """Prove that correct number of locks renders on the dashboard."""
-        self.assertEqual(self.response.context['locks'].count(), 2)
+    def test_redirect_on_update_from_edit_lock_page(self):
+        """Prove redirection to dashboard page after updating a lock."""
+        response = self.client.post(self.url, self.data)
+        self.assertEquals(response.status_code, 302)
+        self.assertEquals(response.url, reverse('dashboard'))
 
-    def test_buttons_display_if_unlocked(self):
+    def test_lock_info_updated(self):
+        """Prove that lock info was updated."""
+        self.assertEqual(self.lock1.name, 'lock1')
+        self.assertEqual(self.lock1.location, 'codefellows')
+        self.assertEqual(self.lock1.serial,'pi12345')
+        self.assertEqual(self.lock1.description, '')
+        self.client.post(self.url, self.data)
+        lock1 = Lock.objects.filter(user=self.user).first()
+        self.assertEqual(lock1.name, 'lock1_updated')
+        self.assertEqual(lock1.description, 'closet')
+        self.assertEqual(lock1.location, 'codefellows')
+        self.assertEqual(lock1.serial,'pi12345')
+
+    def test_number_of_locks_didnt_change(self):
         """
-        Make sure <Lock> button shows up and <Unlock> doesn't
-        if the lock.status == 'unlocked'."""
-        self.lock1.status = 'unlocked'
-        self.lock1.is_active = True
-        self.lock1.save()
-        response = self.client.get(self.url)
-        self.assertContains(response, self.expected1)
-        self.assertNotContains(response, self.expected2)
-
-
-    def test_buttons_display_if_locked(self):
+        Prove that after updating a lock, the total number of locks
+        didn't change.
         """
-        Make sure <Unlock> button shows up and <Lock> doesn't
-        if the lock.status == 'locked'."""
-        self.lock1.status = 'locked'
-        self.lock1.is_active = True
-        self.lock1.save()
-        response = self.client.get(self.url)
-        self.assertNotContains(response, self.expected1)
-        self.assertContains(response, self.expected2)
-
-
-    def test_buttons_display_if_pending(self):
-        """
-        Make sure both <Unlock> and <Lock> buttons show up
-        if the lock.status == 'pending'."""
-        self.lock1.status = 'pending'
-        self.lock1.is_active = True
-        self.lock1.save()
-        response = self.client.get(self.url)
-        self.assertContains(response, self.expected1)
-        self.assertContains(response, self.expected2)
-
-
-    def test_buttons_display_if_not_active(self):
-        """
-        Make sure <Unlock> and <Lock> buttons don't show up
-        if the lock.is_active == False."""
-        self.lock1.is_active = False
-        self.lock1.save()
-        response = self.client.get(self.url)
-        self.assertNotContains(response, self.expected1)
-        self.assertNotContains(response, self.expected2)
+        # number of locks before update
+        count1 = self.user.locks.all().count()
+        self.client.post(self.url, self.data)
+        # number of locks after update
+        count2 = self.user.locks.all().count()
+        self.assertEqual(count1, count2)

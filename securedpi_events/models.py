@@ -13,7 +13,7 @@ class Event(models.Model):
     """Define class for access events."""
 
     lock_id = models.CharField(max_length=20, blank=True)
-    action = models.CharField(max_length=30, blank=True)
+    action = models.CharField(max_length=30, default='unlock')
     RFID = models.CharField(max_length=100, blank=True)
     photo = models.ImageField(
         upload_to='lock_photos',
@@ -21,7 +21,7 @@ class Event(models.Model):
         null=True)
     date_created = models.DateTimeField(auto_now_add=True)
     serial = models.CharField(max_length=20)
-    status = models.CharField(max_length=20, blank=True)
+    status = models.CharField(max_length=20, default='failed')
     mtype = models.CharField(max_length=20)
 
     def __str__(self):
@@ -31,24 +31,23 @@ class Event(models.Model):
 
 @receiver(post_save, sender=Event)
 def start_FR(sender, **kwargs):
-    """Start the facial recognition procedure."""
+    """
+    Initiate facial recognition method with received photo.
+    If the photo and RFID are recognized, make post request to rasp pi to unlock.
+    """
     event = kwargs['instance']
     if event.photo:
         dj_decision = test_individual(event.photo.url, verbose=True, threshold=55)
         print('face recognized: ', dj_decision)
         lock = Lock.objects.get(pk=event.lock_id)
-        if dj_decision[0] == lock.user.pk and event.RFID == lock.RFID and dj_decision[1] < 60:
+        if dj_decision and event.RFID == lock.RFID:
             serial = lock.serial
             data = {
                 'event_id': event.pk,
                 'action': 'unlock',
                 'serial': serial,
                 'mtype': 'fr'
-            }
+                }
             lock.status = 'pending'
             lock.save()
             response = requests.post('http://52.43.75.183:5000', json=data)
-            print(response)
-        #
-        # else:
-        #     event.delete()
