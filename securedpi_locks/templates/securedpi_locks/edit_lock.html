@@ -13,7 +13,7 @@
       {{ form }}
 
       <button class="btn btn-lg btn-success" type="submit">Update</button>
-      <a href="">
+      <a href="{% url 'delete_lock' lock.pk %}">
         <input type="button" value="Delete Lock" class="btn btn-lg btn-danger">
       <a>
     </form>
