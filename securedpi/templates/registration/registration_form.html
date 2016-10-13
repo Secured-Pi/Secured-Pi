@@ -8,7 +8,9 @@
     {% if form.errors %}
       {{ form.errors }}
     {% endif %}
-    <form action="" method="post" class="form-signin">{% csrf_token %}
+
+      <form action="" method="post" class="form-group">{% csrf_token %}
+
       {{ form }}
 
       <button class="btn btn-lg btn-success btn-block" type="submit">SignUp</button>

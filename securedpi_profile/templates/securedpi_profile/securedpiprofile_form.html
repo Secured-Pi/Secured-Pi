@@ -1,0 +1,36 @@
+{% extends "securedpi/base.html" %}
+{% block body %}
+<main class="meta">
+   <h2> {{ user.username }}'s Profile</h2>
+
+    {% if form.errors %}
+      {{ form.errors }}
+    {% endif %}
+    
+    <div class="form-group">
+      <form action="" method="post" class="profile-form">
+      {% csrf_token %}
+
+
+      {{ form }}
+
+
+        <!-- <label for="first_name">First name</label>
+        <input class="form-control" type="text" name="first_name"/>
+
+        <label for="last_name">Last name</label>
+        <input class="form-control" type="text" name="last_name"/>
+
+        <label for="address">Address</label>
+        <input class="form-control" type="text" name="address"/>
+
+        <label for="phone_number">Phone</label>
+        <input class="form-control" type="text" name="phone_number"/> -->
+
+
+      <input class="btn btn-lg btn-success" type="submit" value="Submit"/>
+
+      </form>
+  </div>
+</main>
+{% endblock %}
