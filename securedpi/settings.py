@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'securedpi_locks.apps.SecuredpiLocksConfig',
     'rest_framework',
     'securedpi_events.apps.SecuredpiEventsConfig',
+    'securedpi_facerec.apps.SecuredpiFacerecConfig',
     'securedpi_api.apps.SecuredpiApiConfig',
 ]
 

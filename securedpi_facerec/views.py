@@ -21,19 +21,10 @@ class PhotoView(TemplateView):
         return Photo.objects.filter(user=self.request.user)
 
 
-# @method_decorator(login_required, name='dispatch')
-# class AlbumView(ListView):
-#     template_name = 'imager_images/albums.html'
-#     model = Album
-#     context_object_name = 'albums'
-#
-#     def get_queryset(self):
-#         return Album.objects.filter(user=self.request.user)
-#
-#     def get_context_data(self, **kwargs):
-#         context = super(AlbumView, self).get_context_data(**kwargs)
-#         context['MEDIA_ROOT'] = settings.MEDIA_ROOT
-#         return context
+@method_decorator(login_required, name='dispatch')
+class TrainingView(TemplateView):
+    template_name = 'securedpi_facerec/training.html'
+
 #
 #
 # @method_decorator(login_required, name='dispatch')

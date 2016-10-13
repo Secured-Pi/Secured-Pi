@@ -42,6 +42,8 @@ urlpatterns = [
         include('securedpi_locks.urls')),
     url(r'^events/',
         include('securedpi_events.urls')),
+    url(r'^facerec/',
+        include('securedpi_facerec.urls')),
     # url(r'^profile',
     #     include('securedpi_profile.urls')),
 ]

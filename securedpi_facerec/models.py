@@ -5,11 +5,6 @@ from django.utils.encoding import python_2_unicode_compatible
 
 @python_2_unicode_compatible
 class Photo(models.Model):
-    title = models.CharField(
-            max_length=128,
-            blank=True,
-            null=True
-    )
     description = models.CharField(
             max_length=500,
             blank=True,
