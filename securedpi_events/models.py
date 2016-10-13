@@ -12,7 +12,7 @@ import requests
 class Event(models.Model):
     """Define class for access events."""
     lock_id = models.CharField(max_length=20, blank=True)
-    action = models.CharField(max_length=30, blank=True)
+    action = models.CharField(max_length=30, default='unlock')
     RFID = models.CharField(max_length=100, blank=True)
     photo = models.ImageField(
         upload_to='lock_photos',

@@ -27,6 +27,10 @@ class DeleteLockView(DeleteView):
 
 
 def manual_action(request, **kwargs):
+    """
+    Create an instance of Event. Make a request to raspberry pi to lock/unlock.
+    Chnage lock status to pending.
+    """
     lock = Lock.objects.get(pk=kwargs['pk'])
     data = {
         'lock_id': kwargs['pk'],
