@@ -20,7 +20,7 @@ class Event(models.Model):
         null=True)
     date_created = models.DateTimeField(auto_now_add=True)
     serial = models.CharField(max_length=20)
-    status = models.CharField(max_length=20, blank=True)
+    status = models.CharField(max_length=20, default='failed')
     mtype = models.CharField(max_length=20)
 
 
@@ -30,6 +30,10 @@ class Event(models.Model):
 
 # @receiver(post_save, sender=Event)
 # def start_FR(sender, **kwargs):
+#     """
+#     Initiate facial recognition method with received photo.
+#     If the photo and RFID are recognized, make post request to rasp pi to unlock.
+#     """
 #     event = kwargs['instance']
 #     if event.photo:
 #         dj_decision = test_individual(event.photo.url, verbose=True, threshold=55)
@@ -46,6 +50,3 @@ class Event(models.Model):
 #             lock.status = 'pending'
 #             lock.save()
 #             response = requests.post('http://52.43.75.183:5000', json=data)
-#         #
-#         # else:
-#         #     event.delete()

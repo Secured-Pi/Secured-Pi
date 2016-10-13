@@ -3,6 +3,10 @@
   text-align: center;
 }
 
+.title {
+  padding-top: 10px;
+}
+
 input {
   max-width: 400px;
   margin: 0.5em  auto;
@@ -15,46 +19,71 @@ input {
 }
 
 .nav-link {
-  font-size: 1.4em;
+  font-size: 1em;
   margin: 10px;
 }
 
-.locks, .column1, .column2, .column3, .events{
+.locks, .column, .column3, .events{
   list-style: none;
 }
 
-.column1 {
-  display: inline-block;
-  margin: auto 50px auto 50px;
-  width: 30%;
+.column {
+  width: 90%;
+  margin: 0 auto;
 }
 
-.column2 {
-  display: inline-block;
-  margin: auto 100px auto 100px;
-  width: 35%;
-}
-
-.column2 a {
-  te
-  margin-left: 20px;
-  margin-right: 20px;
+.column span {
+  font-weight: bold;
+  font-size: 1.2em;
 }
 
 .column3 {
   display: inline-block;
 }
 
-.column2 p {
+.column p {
   margin-top: 5px;
+}
+
+.column input {
+  margin-bottom: 10px;
+}
+
+ .column li {
+   margin-top: 10px;
 }
 
 .lock-panel {
   background-color: #efefef;
   width: 70%;
-  margin: 20px  auto;
+  margin: 0 auto;
   border-radius: 10px;
   max-height: auto;
+  text-align: center;
+}
+
+.event-panel {
+  background-color: #efefef;
+  width: 90%;
+  margin: 0 auto;
+  border-radius: 10px;
+  max-height: auto;
+  text-align: center;
+  margin-top: 10px;
+  text-align: left;
+}
+
+.events {
+  text-align: left;
+}
+
+.events > * {
+  margin: 5px 20px 5px 20px;
+  font-size: 1.1em;
+}
+
+.events span {
+  font-weight: bold;
 }
 
 .green {
@@ -75,15 +104,7 @@ input {
 
 ul {
   text-align: justify;
-}
-
-.log-btn {
-  width: 30%;
-}
-
-.events > * {
-  display: inline-block;
-  margin: 5px 20px 5px 20px;
+  padding: 0px;
 }
 
 .thumbnail {
@@ -93,6 +114,82 @@ ul {
   margin-bottom: 0;
 }
 
-.form-edit input {
+.profile {
+  text-align: left;
+}
+
+.profile > * {
+  padding: 20px;
+}
+
+.profile span {
+  font-weight: bold;
   margin-right: 10px;
+  font-size: 1.2em;
+}
+
+.profile-form label {
+  font-size: 1.5em;
+}
+
+@media (min-width: 640px) {
+  .column {
+    /*display: inline-block;*/
+    /*margin: auto 50px auto 50px;*/
+    width: 90%;
+  }
+
+  input {
+    max-width: 400px;
+    margin: 0.5em  auto;
+  }
+
+  .nav {
+    text-align: right;
+    margin-top: 20px;
+    margin-right: 50px;
+  }
+
+  .nav-link {
+    font-size: 1.4em;
+    margin: 10px;
+  }
+
+  .lock-panel {
+    background-color: #efefef;
+    width: 50%;
+    margin: 0 auto;
+    border-radius: 10px;
+    max-height: auto;
+    text-align: center;
+  }
+
+  .event-panel {
+    background-color: #efefef;
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 10px;
+    border-radius: 10px;
+    max-height: auto;
+    text-align: center;
+  }
+
+  .events > * {
+    display: inline-block;
+    font-size: 1.3em;
+  }
+
+  .events span {
+    font-weight: bold;
+  }
+
+  .unlock-btn {
+    width: 30%;
+    margin: 0 auto;
+  }
+
+  .column p, .events p {
+    font-size: 1.4em;
+  }
+
 }

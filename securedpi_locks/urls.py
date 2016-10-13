@@ -1,8 +1,7 @@
 from django.conf.urls import url, include
-from django.views.generic import TemplateView
 from django.contrib.auth.decorators import login_required
 from securedpi_locks import views
-from securedpi_locks.models import Lock
+
 
 
 urlpatterns = [

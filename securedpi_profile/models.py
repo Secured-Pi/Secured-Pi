@@ -17,7 +17,7 @@ class SecuredpiProfile(models.Model):
     first_name = models.CharField(max_length=50, blank=True)
     last_name = models.CharField(max_length=50, blank=True)
     address = models.CharField(max_length=200, blank=True)
-    email = models.CharField(max_length=50, blank=True)
+    phone_number = models.CharField(max_length=50, blank=True)
 
     def __str__(self):
         return 'Profile for {}'.format(self.user)

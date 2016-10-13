@@ -36,7 +36,6 @@ class EventTestCase(TestCase):
             self.assertEqual(getattr(self.event, key), val)
 
 
-
 class EventViewTestCase(SetupTestCase):
     """Define test class for event view."""
     def setUp(self):

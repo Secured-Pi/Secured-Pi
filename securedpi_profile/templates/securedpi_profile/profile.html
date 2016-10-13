@@ -1,0 +1,19 @@
+{% extends "securedpi/base.html" %}
+{% block body %}
+<div class="meta">
+   <h2><strong> {{ user.username }}'s Profile</strong></h2>
+
+    <div class="lock-panel">
+      <div class="profile">
+        <h4><span>First Name: </span>{{ user.profile.first_name }}</h4>
+        <h4><span>Last Name: </span>{{ user.profile.last_name }}</h4>
+        <h4><span>Address: </span>{{ user.profile.address }}</h4>
+        <h4><span>Phone: </span>{{ user.profile.phone_number }}</h4>
+      </div>
+    </div>
+
+    <a href="{% url 'edit_profile' user.pk %}">
+      <input class="btn btn-primary btn-info btn-lg" type="button" value="Edit Profile"/>
+    </a>
+</div>
+{% endblock %}

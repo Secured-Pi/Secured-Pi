@@ -2,19 +2,25 @@
 {% block body %}
 <div class="meta">
   <h2><strong>Access Log</strong></h2>
-  <a href="{% url 'delete_old_events' pk=lock_id %}">
-    <input type="button" value="Delete 10 oldest events" class="btn btn-primary">
-  </a>
+
+    {% if not events %}
+      <h4><span class="grey">THERE ARE NO EVENTS ACCOSSIATED WITH THIS LOCK</span></h4>
+    {% elif events.count > 9 %}
+      <a href="{% url 'delete_old_events' pk=lock_id %}">
+        <input type="button" value="Delete 10 oldest events" class="btn btn-primary">
+      </a>
+    {% endif %}
+
       <ul>
         {% for event in events %}
-        <div class='lock-panel'>
+        <div class='event-panel'>
 
           <li class="events">
-            <h3><strong>Lock #{{ event.lock_id }}</strong></h3>
-            <p>access time: {{ event.date_created }}</p>
-            <p>access method: {{ event.mtype }}</p>
-            <p>requested: {{ event.action }}</p>
-            <p>result: {{ event.status }}</p>
+            <h2><strong>Lock #{{ event.lock_id }}</strong></h2>
+            <p><span>access time:</span> {{ event.date_created }}</p>
+            <p><span>access method:</span> {{ event.mtype }}</p>
+            <p><span>requested:</span> {{ event.action }}</p>
+            <p><span>result:</span> {{ event.status }}</p>
             {% if event.photo %}
               <p><img class="thumbnail" src="{{ event.photo.url }}"></p>
             {% endif %}
