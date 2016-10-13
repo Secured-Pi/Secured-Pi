@@ -96,5 +96,7 @@ facial_recognition/david.sad
 facial_recognition/steven.png
 facial_recognition/tw.jpeg
 facial_recognition/recog_brain.yml
+facial_recognition/recog_brain-small.yml
+facial_recognition/recog_brain-med.yml
 lock_photos
 lock_photos/*
