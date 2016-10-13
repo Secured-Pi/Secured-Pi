@@ -1,29 +1,29 @@
-"""
-Secured-Pi, 2016.
-
-This is a script for the Secured-Pi project dealing with the machine learning
-aspects of the facial recognition.
-
-This script relies on the OpenCV 3.1 library installed with the opencv-contrib
-face module. If you do not have OpenCV installed, I highly recommend that you
-attempt to do so using a virtual box, making sure to also install the face
-module, which is part of the OpenCV-contrib project.
-
-For training, create a directory called 'training' inside of this directory.
-Each person's photo should be named like "member-1-a", where 1 identifies the
-person to whom the image belongs to, and the letter increments for each photo.
-For example, a training set of 2 people might contain the images:
-member-1-a.gif
-member-1-b.gif
-member-2-a.gif
-member-2-b.gif .. and so on ..
-
-For accuracy, we recommend a minimum of __ pictures for each member.  It is
-also important that no other files be contained in the training directory
-besides the pictures. Just want to thank the creators of the tutorials at:
-https://pythonprogramming.net/loading-video-python-opencv-tutorial/
-"""
-
+# """
+# Secured-Pi, 2016.
+#
+# This is a script for the Secured-Pi project dealing with the machine learning
+# aspects of the facial recognition.
+#
+# This script relies on the OpenCV 3.1 library installed with the opencv-contrib
+# face module. If you do not have OpenCV installed, I highly recommend that you
+# attempt to do so using a virtual box, making sure to also install the face
+# module, which is part of the OpenCV-contrib project.
+#
+# For training, create a directory called 'training' inside of this directory.
+# Each person's photo should be named like "member-1-a", where 1 identifies the
+# person to whom the image belongs to, and the letter increments for each photo.
+# For example, a training set of 2 people might contain the images:
+# member-1-a.gif
+# member-1-b.gif
+# member-2-a.gif
+# member-2-b.gif .. and so on ..
+#
+# For accuracy, we recommend a minimum of __ pictures for each member.  It is
+# also important that no other files be contained in the training directory
+# besides the pictures. Just want to thank the creators of the tutorials at:
+# https://pythonprogramming.net/loading-video-python-opencv-tutorial/
+# """
+#
 # import os
 # import cv2
 # import numpy as np

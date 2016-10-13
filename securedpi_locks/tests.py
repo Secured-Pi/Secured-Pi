@@ -42,6 +42,29 @@ class LockTestCase(TestCase):
         self.assertTrue(self.user.locks.count(), 1)
 
 
+class LockAccessCase(TestCase):
+    """
+    Make sure unauth users redirected to login page when trying accessing
+    'locks/' urls.
+    """
+    def test_no_access_to_events_if_unath(self):
+        """Prove redirection to the login page."""
+        urls = [
+            reverse('edit_lock', kwargs={'pk': 1}),
+            reverse('delete_lock', kwargs={'pk': 1}),
+            reverse('manual_unlock', kwargs={'pk': 1}),
+            reverse('manual_lock', kwargs={'pk': 1}),
+        ]
+        login_url = reverse('auth_login')
+        for url in urls:
+            response = self.client.get(url, follow=True)
+            expected_url = '{}?next={}'.format(login_url, url)
+            expected = (expected_url, 302)
+            self.assertEqual(response.status_code, 200)
+            self.assertEqual(len(response.redirect_chain), 1)
+            self.assertTupleEqual(response.redirect_chain[0], expected)
+
+            
 class SetupTestCase(TestCase):
     """
     Define class for tests setup. All other test classes inherit

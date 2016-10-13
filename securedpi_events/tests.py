@@ -27,13 +27,34 @@ class EventTestCase(TestCase):
         attr_vals = [
             ('lock_id', '123'),
             ('serial', 'test_serial'),
-            ('status', ''),
+            ('status', 'failed'),
             ('mtype', 'manual'),
             ('action', 'lock'),
             ('photo', None)
         ]
         for key, val in attr_vals:
             self.assertEqual(getattr(self.event, key), val)
+
+
+class EventAccessCase(TestCase):
+    """
+    Make sure unauth users redirected to login page when trying accessing
+    events and delete_old-events routes.
+    """
+    def test_no_access_to_events_if_unath(self):
+        """Prove redirection to the login page."""
+        urls = [
+            reverse('events', kwargs={'pk': 1}),
+            reverse('delete_old_events', kwargs={'pk': 1})
+        ]
+        login_url = reverse('auth_login')
+        for url in urls:
+            response = self.client.get(url, follow=True)
+            expected_url = '{}?next={}'.format(login_url, url)
+            expected = (expected_url, 302)
+            self.assertEqual(response.status_code, 200)
+            self.assertEqual(len(response.redirect_chain), 1)
+            self.assertTupleEqual(response.redirect_chain[0], expected)
 
 
 class EventViewTestCase(SetupTestCase):
