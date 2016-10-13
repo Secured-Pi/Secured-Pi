@@ -7,7 +7,7 @@
       <h2><strong>Training View</strong></h2>
       <button class="btn btn-primary" id="start-capture">Capture</button>
       <button class="btn btn-danger" id="stop-capture">Stop</button>
-      <div id="camera"></div>
+      <div class="col-sm-8" id="camera"></div>
     </div>
     <div class="col-sm-12" id="captured">
 
@@ -24,8 +24,9 @@
 
   $(document).ready(function() {
     Webcam.set({
-      height: 480,
+      height: 600,
       image_format: 'png',
+      dest_width: 640,
       dest_height: 480
     });
 
