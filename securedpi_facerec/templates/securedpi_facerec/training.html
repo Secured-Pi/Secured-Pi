@@ -1,7 +1,52 @@
 {% extends "securedpi/base.html" %}
 {% block body %}
-<div class="meta">
-  <h2><strong>Training View</strong></h2>
-</div>
+<section class="container-fluid">
 
+  <div class="row">
+    <div class="col-sm-12">
+      <h2><strong>Training View</strong></h2>
+      <button class="btn btn-primary" id="start-capture">Capture</button>
+      <button class="btn btn-danger" id="stop-capture">Stop</button>
+      <div id="camera"></div>
+    </div>
+    <div class="col-sm-12" id="captured">
+
+    </div>
+  </div>
+
+  {% endblock %}
+
+  {% block js %}
+  <script type="text/javascript" src="{{ STATIC_ROOT }}/static/js/vendors/webcam.min.js"></script>
+  <script type="text/javascript">
+  var trainingForm = new FormData()
+  trainingForm.append('csrfmiddlewaretoken', '{{ csrf_token }}')
+
+  $(document).ready(function() {
+    Webcam.set({
+      height: 480,
+      image_format: 'png',
+      dest_height: 480
+    });
+
+    Webcam.attach('#camera');
+    var interval;
+    $('#start-capture').click(function() {
+      interval = setInterval(function() {
+        Webcam.snap(function(image) {
+          trainingForm.append('file', image);
+          $('<div class="col-sm-2"><img src="' + image + '"class="img-responsive"></div>').appendTo('#captured');
+          Webcam.upload( image, '/facerec/train/', function(code, text) {
+            console.log(text);
+          });
+        });
+      }, 2000);
+    });
+
+    $('#stop-capture').click(function() {
+      clearInterval(interval)
+    });
+  });
+  </script>
+</section>
 {% endblock %}
