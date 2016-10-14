@@ -19,7 +19,7 @@ class EventView(TemplateView):
 
 def delete_old_events(request, **kwargs):
     """Delete 10 oldest events from the log."""
-    old_events = Event.objects.filter(lock_id=kwargs['pk']).order_by('date_created')[:2]
+    old_events = Event.objects.filter(lock_id=kwargs['pk']).order_by('date_created')[:10]
     for event in old_events:
         event.delete()
     return HttpResponseRedirect(reverse('events', kwargs={'pk': kwargs['pk']}))

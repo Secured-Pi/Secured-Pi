@@ -23,13 +23,13 @@
           <h5>Access Log</h5>
         </div>
         <div class="ibox-content">
-          {% if not events %}
-            <h4><span class="grey">THERE ARE NO EVENTS ACCOSSIATED WITH THIS LOCK</span></h4>
-          {% elif events.count > 9 %}
-            <a href="{% url 'delete_old_events' pk=lock_id %}">
-              <input type="button" value="Delete 10 oldest events" class="btn btn-primary">
-            </a>
-          {% endif %}
+        {% if not events %}
+          <h4><span class="grey">THERE ARE NO EVENTS ACCOSSIATED WITH THIS LOCK</span></h4>
+        {% else %}
+          <a href="{% url 'delete_old_events' pk=lock_id %}">
+            <input type="button" value="Delete 10 oldest events" class="btn btn-primary">
+          </a>
+        {% endif %}
 
             <ul>
               {% for event in events %}

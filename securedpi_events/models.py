@@ -5,8 +5,9 @@ from securedpi_locks.models import Lock
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 import requests
-# from securedpi_facerec.facial_recognition import facial_recognition
 from securedpi.settings import MEDIA_ROOT
+from securedpi_facerec.facial_recognition import facial_recognition
+import time
 
 
 @python_2_unicode_compatible
@@ -39,13 +40,12 @@ def start_FR(sender, **kwargs):
     unlock.
     """
     event = kwargs['instance']
+    lock = Lock.objects.get(pk=event.lock_id)
 
-    if event.photo:
+    if event.photo and lock.status is 'locked':
         dj_decision = facial_recognition.test_individual(event.photo.url, verbose=True)
         username = User.objects.get(pk=dj_decision[0]).username
         print('face recognized: ', dj_decision[0], ' as member ', username)
-
-        lock = Lock.objects.get(pk=event.lock_id)
         user_owns_lock = dj_decision[0] == lock.user.pk
         confidence_acceptable = dj_decision[1] < 42
         matching_rfid = event.RFID == lock.RFID
@@ -64,6 +64,11 @@ def start_FR(sender, **kwargs):
             lock.status = 'pending'
             lock.save()
             print('User authorized, sending unlock request.')
-            response = requests.post('http://52.43.75.183:5000', json=data)
+            requests.post('http://52.43.75.183:5000', json=data)
+            time.sleep(30)
+            data['action'] = 'lock'
+            lock.status = 'pending'
+            lock.save()
+            requests.post('http://52.43.75.183:5000', json=data)
             return
         print('Access Denied.')
