@@ -9,7 +9,7 @@ class Photo(models.Model):
     date_uploaded = models.DateTimeField(
             auto_now_add=True,
             null=False)
-    image = models.ImageField(upload_to='images/%Y-%m-%d')
+    image = models.ImageField(upload_to='training')
 
     def __str__(self):
         return "Photo: {}".format(self.user.username)
