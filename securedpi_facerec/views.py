@@ -9,15 +9,21 @@ from django.http import JsonResponse
 from .forms import PhotoForm
 from .models import Photo
 from django.views.decorators.csrf import csrf_exempt
+from securedpi_facerec.facial_recognition import facial_recognition
+import json
 
 
 @login_required
 @csrf_exempt
 def upload_file(request):
     if request.method == 'POST':
-        f = request.FILES['webcam']
-        f.name = "{}-{}-adasda".format('member', request.user.pk)
-        new_file = Photo(user=request.user, image=f)
-        new_file.save()
-        return JsonResponse({})
+        json_data = json.loads(request.body)
+        if json_data['action'] == 'start':
+            facial_recognition.train_recognizer()
+        else:
+            f = request.FILES['webcam']
+            f.name = "{}-{}-adasda".format('member', request.user.pk)
+            new_file = Photo(user=request.user, image=f)
+            new_file.save()
+            return JsonResponse({})
     return render(request, 'securedpi_facerec/training.html')
