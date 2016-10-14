@@ -41,7 +41,7 @@ def start_FR(sender, **kwargs):
     event = kwargs['instance']
     lock = Lock.objects.get(pk=event.lock_id)
 
-    if event.photo and lock.status is 'locked':
+    if event.photo and lock.status == 'locked':
         dj_decision = facial_recognition.test_individual(event.photo.url, verbose=True)
         username = User.objects.get(pk=dj_decision[0]).username
         print('face recognized: ', dj_decision[0], ' as member ', username)
