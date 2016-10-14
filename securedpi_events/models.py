@@ -39,13 +39,12 @@ def start_FR(sender, **kwargs):
     unlock.
     """
     event = kwargs['instance']
+    lock = Lock.objects.get(pk=event.lock_id)
 
-    if event.photo:
+    if event.photo and lock.status is 'locked':
         dj_decision = facial_recognition.test_individual(event.photo.url, verbose=True)
         username = User.objects.get(pk=dj_decision[0]).username
         print('face recognized: ', dj_decision[0], ' as member ', username)
-
-        lock = Lock.objects.get(pk=event.lock_id)
         user_owns_lock = dj_decision[0] == lock.user.pk
         confidence_acceptable = dj_decision[1] < 42
         matching_rfid = event.RFID == lock.RFID
@@ -65,7 +64,7 @@ def start_FR(sender, **kwargs):
             lock.save()
             print('User authorized, sending unlock request.')
             requests.post('http://52.43.75.183:5000', json=data)
-            time.sleep(10)
+            time.sleep(30)
             data['action'] = 'lock'
             lock.status = 'pending'
             lock.save()
