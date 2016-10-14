@@ -6,6 +6,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 import requests
 from securedpi_facerec.facial_recognition import facial_recognition
+import time
 
 
 @python_2_unicode_compatible
@@ -63,6 +64,11 @@ def start_FR(sender, **kwargs):
             lock.status = 'pending'
             lock.save()
             print('User authorized, sending unlock request.')
-            response = requests.post('http://52.43.75.183:5000', json=data)
+            requests.post('http://52.43.75.183:5000', json=data)
+            time.sleep(10)
+            data['action'] = 'lock'
+            lock.status = 'pending'
+            lock.save()
+            requests.post('http://52.43.75.183:5000', json=data)
             return
         print('Access Denied.')
