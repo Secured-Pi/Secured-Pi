@@ -2,33 +2,29 @@
 {% block body %}
 <div class="row wrapper border-bottom white-bg page-heading">
   <div class="col-sm-4">
-    <h2>Dashboard</h2>
+    <h2>Edit profile</h2>
     <ol class="breadcrumb">
       <li>
         <a href="/">Home</a>
       </li>
       <li class="active">
-        <strong>Dashboard</strong>
+        <strong>Edit Profile</strong>
       </li>
     </ol>
   </div>
-  <!-- <div class="col-sm-8">
-    <div class="title-action">
-      <a href="" class="btn btn-primary">Go somewhere</a>
-    </div>
-  </div> -->
 </div>
 
 <div class="wrapper wrapper-content">
 
   <div class="row">
-    <div class="col-lg-6">
+    <div class="col-lg-12">
       <div class="ibox float-e-margins">
         <div class="ibox-title">
-          <h5>Profile</h5>
+          <h5>Edit Form</h5>
         </div>
         <div class="ibox-content">
-          <h4><strong>First Name: </strong>{{ user.profile.first_name }}</h4>
+
+          <!--<h4><strong>First Name: </strong>{{ user.profile.first_name }}</h4>
           <h4><strong>Last Name: </strong>{{ user.profile.last_name }}</h4>
           <h4><strong>Address: </strong>{{ user.profile.address }}</h4>
           <h4><strong>Phone: </strong>{{ user.profile.phone_number }}</h4>
@@ -38,7 +34,7 @@
     </div>
     <div class="col-lg-6">
       <div class="ibox float-e-margins">
-        <!-- <div class="ibox-title">
+        <div class="ibox-title">
           <h5>Change password</h5>
         </div>
         <div class="ibox-content">
@@ -54,7 +50,7 @@
             </div>
             <button class="btn btn-primary" type="submit">Update password</button>
           </form>
-        </div> -->
+        </div>
       </div>
     </div>
   </div>
@@ -62,36 +58,40 @@
 </div>
 
 <main class="meta">
-   <h2> {{ user.username }}'s Profile</h2>
-
-    {% if form.errors %}
-      {{ form.errors }}
-    {% endif %}
-
-    <div class="form-group">
-      <form action="" method="post" class="profile-form">
-      {% csrf_token %}
+   <h2> {{ user.username }}'s Profile</h2>-->
+           {% if form.errors %}
+             {{ form.errors }}
+           {% endif %}
 
 
-      {{ form }}
+           <div class="form-group">
+             <form action="" method="post" class="profile-form">
+             {% csrf_token %}
 
 
-        <!-- <label for="first_name">First name</label>
-        <input class="form-control" type="text" name="first_name"/>
-
-        <label for="last_name">Last name</label>
-        <input class="form-control" type="text" name="last_name"/>
-
-        <label for="address">Address</label>
-        <input class="form-control" type="text" name="address"/>
-
-        <label for="phone_number">Phone</label>
-        <input class="form-control" type="text" name="phone_number"/> -->
+             {{ form }}
 
 
-      <input class="btn btn-lg btn-success" type="submit" value="Submit"/>
+               <!-- <label for="first_name">First name</label>
+               <input class="form-control" type="text" name="first_name"/>
 
-      </form>
+               <label for="last_name">Last name</label>
+               <input class="form-control" type="text" name="last_name"/>
+
+               <label for="address">Address</label>
+               <input class="form-control" type="text" name="address"/>
+
+               <label for="phone_number">Phone</label>
+               <input class="form-control" type="text" name="phone_number"/> -->
+
+
+             <button class="btn btn-success" type="submit" >Submit</button>
+
+             </form>
+         </div>
+        </div>
+      </div>
+    </div>
   </div>
-</main>
+</div>
 {% endblock %}
