@@ -10,7 +10,8 @@
 
   <!-- Vendor css -->
   <link rel="stylesheet" href="{% static "vendors/css/normalize.css" %}">
-  <link rel="stylesheet" href="{% static "vendors/css/fonts/font-awesome.min.css" %}">
+  <link rel="stylesheet" href="{% static "vendors/css/normalize.css" %}">
+  <link rel="stylesheet" href="{% static "vendors/css/animate.min.css" %}">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
   <link rel="stylesheet" href="{% static "vendors/inspinia/css/style.css" %}">
 
@@ -38,7 +39,7 @@
             <div class="logo-element">SP</div>
           </li>
           <li>
-            <a href="/"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboard</span></a>
+            <a href="{% url "dashboard" %}"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboard</span></a>
           </li>
           </li>
 
@@ -97,7 +98,7 @@
                 </li>
 
                 <li>
-                  <a href="login.html">
+                  <a href="{% url "auth_logout" %}">
                     <i class="fa fa-sign-out"></i> Log out
                   </a>
                 </li>

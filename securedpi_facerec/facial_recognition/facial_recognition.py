@@ -29,7 +29,7 @@ import cv2
 import numpy as np
 import re
 from PIL import Image
-from securedpi.settings import MEDIA_ROOT
+from securedpi.settings import BASE_DIR, MEDIA_ROOT
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 CASCADE_MODEL = os.path.join(HERE, 'haarcascade_frontalface_default.xml')
@@ -86,7 +86,7 @@ def test_individual(image_to_test, threshold=40, verbose=False):
     train_recognizer function. Returns a boolean.
     """
     # image_array = np.array(Image.open(image_to_test).convert('L'), 'uint8')
-    image_array = np.array(Image.open('/home/ubuntu/checkout' + image_to_test).convert('L'), 'uint8')
+    image_array = np.array(Image.open(BASE_DIR + image_to_test).convert('L'), 'uint8')
     curr_face = FACE_CASCADE.detectMultiScale(image_array)[0]
     x, y, w, h = curr_face
     test_image = image_array[y: y + h, x: x + w]
