@@ -1,16 +1,19 @@
 """Test Facial Recognition."""
 
-
-def setup_test_recognizer():
-    import cv2
-    dummy_recognizer = cv2.face.createLBPHFaceRecognizer
-    return dummy_recognizer()
+import os
 
 
 def test_train_recognizer():
-    recognizer = setup_test_recognizer()
-
+    """Assert that the recognizer runs and creates the yml file."""
+    from facial_recognition import train_recognizer
+    if os.path.isfile('test_brain.yml'):
+        os.remove('test_brain.yml')
+    train_recognizer(img_path='training', save_file='test_brain.yml')
+    assert os.path.isfile('test_brain.yml')
 
 
 def test_test_individual():
-    pass
+    from facial_recognition import test_individual, train_recognizer
+    train_recognizer(img_path='training', save_file='test_brain.yml')
+    x = test_individual('test_training/member-1-testing')
+    assert x[0] == 0.0
