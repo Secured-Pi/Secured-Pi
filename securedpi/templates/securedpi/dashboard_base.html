@@ -36,10 +36,14 @@
             </div>
             <div class="logo-element">SP</div>
           </li>
-          <li>
+
+          {% url 'dashboard' as dashboard_url %}
+          <li {% if request.path == dashboard_url %} class="active" {% endif %}>
             <a href="{% url "dashboard" %}"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboard</span></a>
           </li>
-          <li>
+
+          {% url 'profile' as profile_url %}
+          <li {% if request.path == profile_url %} class="active" {% endif %}>
             <a href="{% url "profile" %}"><i class="fa fa-user"></i> <span class="nav-label">Profile</span></a>
           </li>
           <li>
