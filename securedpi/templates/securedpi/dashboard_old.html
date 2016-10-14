@@ -1,0 +1,63 @@
+{% extends "securedpi/dashboard_base.html" %}
+{% block body %}
+
+
+<div class="meta">
+  <h2><strong>My Locks</strong></h2>
+      <ul>
+        {% for lock in locks %}
+        <div class='lock-panel'>
+
+          <li class="column">
+
+            <h3 class="title"><strong>{{ lock.name }}</strong></h3>
+
+            <p>(id#{{ lock.pk }} serial#{{ lock.serial }})</p>
+              {% if lock.is_active %}
+
+                {% if lock.status == 'locked' %}
+                  <h4>status: <span class="green">LOCKED</span></h4>
+                  <div class="unlock-btn">
+                    <a href="{% url 'manual_unlock' pk=lock.pk action='unlock' %}">
+                      <input type='button' class="btn btn-primary btn-lg btn-block" value='Unlock'>
+                    </a>
+                  </div>
+
+                {% elif lock.status == 'pending' %}
+                  <h4>status: <span class="purple">PENDING</span></h4>
+                  <a href="{% url 'manual_unlock' pk=lock.pk action='unlock' %}">
+                    <input type='button' class="btn btn-primary" value='Unlock'>
+                  </a>
+                  <a href="{% url 'manual_lock' pk=lock.pk action='lock' %}">
+                    <input type='button' class="btn btn-primary" value='Lock'>
+                  </a>
+
+                {% else %}
+                  <h4>status: <span class="red">UNLOCKED</span></h4>
+                  <a href="{% url 'manual_lock' pk=lock.pk action='lock' %}">
+                    <input type='button' class="btn btn-primary btn-lg btn-block" value='Lock'>
+                  </a>
+                {% endif %}
+
+                {% else %}
+              <h4><span class="grey">NOT ACTIVE</span></h4>
+              {% endif %}
+
+            <p><span>Location:</span> {{ lock.location }} ({{ lock.description }})</p>
+            <p><span>Facial recognition enabled:</span> {{ lock.facial_recognition }}</p>
+            <p><span>Date created:</span> {{ lock.date_created }}</p>
+            <p><span>Date modified:</span> {{ lock.date_modified }}</p>
+            <a href="{% url 'edit_lock' lock.pk %}"><input type="button" class="btn btn-primary btn-small btn-info" value="Edit Details"></a>
+            <a href="{% url 'events' lock.pk %}"><input type="button" class="btn btn-primary btn-small btn-info" value="Access Log"></a>
+          </li>
+
+        </div>
+        {% endfor %}
+      </ul>
+  </div>
+
+  <script>
+  setTimeout(function(){window.location=window.location;}, 5000);
+  </script>
+
+{% endblock %}
