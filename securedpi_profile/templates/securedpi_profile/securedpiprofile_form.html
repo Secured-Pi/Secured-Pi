@@ -1,36 +1,97 @@
-{% extends "securedpi/base.html" %}
+{% extends "securedpi/dashboard_base.html" %}
 {% block body %}
-<main class="meta">
-   <h2> {{ user.username }}'s Profile</h2>
-
-    {% if form.errors %}
-      {{ form.errors }}
-    {% endif %}
-    
-    <div class="form-group">
-      <form action="" method="post" class="profile-form">
-      {% csrf_token %}
-
-
-      {{ form }}
-
-
-        <!-- <label for="first_name">First name</label>
-        <input class="form-control" type="text" name="first_name"/>
-
-        <label for="last_name">Last name</label>
-        <input class="form-control" type="text" name="last_name"/>
-
-        <label for="address">Address</label>
-        <input class="form-control" type="text" name="address"/>
-
-        <label for="phone_number">Phone</label>
-        <input class="form-control" type="text" name="phone_number"/> -->
-
-
-      <input class="btn btn-lg btn-success" type="submit" value="Submit"/>
-
-      </form>
+<div class="row wrapper border-bottom white-bg page-heading">
+  <div class="col-sm-4">
+    <h2>Edit profile</h2>
+    <ol class="breadcrumb">
+      <li>
+        <a href="/">Home</a>
+      </li>
+      <li class="active">
+        <strong>Edit Profile</strong>
+      </li>
+    </ol>
   </div>
-</main>
+</div>
+
+<div class="wrapper wrapper-content">
+
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="ibox float-e-margins">
+        <div class="ibox-title">
+          <h5>Edit Form</h5>
+        </div>
+        <div class="ibox-content">
+
+          <!--<h4><strong>First Name: </strong>{{ user.profile.first_name }}</h4>
+          <h4><strong>Last Name: </strong>{{ user.profile.last_name }}</h4>
+          <h4><strong>Address: </strong>{{ user.profile.address }}</h4>
+          <h4><strong>Phone: </strong>{{ user.profile.phone_number }}</h4>
+          <a href="{% url 'edit_profile' user.pk %}" class="btn btn-info">Edit Profile</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="ibox float-e-margins">
+        <div class="ibox-title">
+          <h5>Change password</h5>
+        </div>
+        <div class="ibox-content">
+          <form action="" method="post">{% csrf_token %}
+            <div class="form-group">
+              <input type="password" name="current-password" class="form-control" placeholder="Current password" required>
+            </div>
+            <div class="form-group">
+              <input type="password" name="new-password" class="form-control" placeholder="New password" required>
+            </div>
+            <div class="form-group">
+              <input type="password" name="confirm-new-password" class="form-control" placeholder="Confirm new password" required>
+            </div>
+            <button class="btn btn-primary" type="submit">Update password</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<main class="meta">
+   <h2> {{ user.username }}'s Profile</h2>-->
+           {% if form.errors %}
+             {{ form.errors }}
+           {% endif %}
+
+
+           <div class="form-group">
+             <form action="" method="post" class="profile-form">
+             {% csrf_token %}
+
+
+             {{ form }}
+
+
+               <!-- <label for="first_name">First name</label>
+               <input class="form-control" type="text" name="first_name"/>
+
+               <label for="last_name">Last name</label>
+               <input class="form-control" type="text" name="last_name"/>
+
+               <label for="address">Address</label>
+               <input class="form-control" type="text" name="address"/>
+
+               <label for="phone_number">Phone</label>
+               <input class="form-control" type="text" name="phone_number"/> -->
+
+
+             <button class="btn btn-success" type="submit" >Submit</button>
+
+             </form>
+         </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}

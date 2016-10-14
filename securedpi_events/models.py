@@ -6,7 +6,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 import requests
 from securedpi_facerec.facial_recognition import facial_recognition
-import time
+from securedpi.settings import MEDIA_ROOT
 
 
 @python_2_unicode_compatible
@@ -42,7 +42,9 @@ def start_FR(sender, **kwargs):
     lock = Lock.objects.get(pk=event.lock_id)
 
     if event.photo and lock.status == 'locked':
-        dj_decision = facial_recognition.test_individual(event.photo.url, verbose=True)
+        dj_decision = facial_recognition.test_individual(
+            event.photo.url,
+            verbose=True)
         username = User.objects.get(pk=dj_decision[0]).username
         print('**face recognized: ', dj_decision[0], ' as member ', username)
         user_owns_lock = dj_decision[0] == lock.user.pk
@@ -64,12 +66,5 @@ def start_FR(sender, **kwargs):
             lock.save()
             print('User authorized, sending unlock request.')
             requests.post('http://52.43.75.183:5000', json=data)
-
-            # to do: auto-lock after facial recog, not working atm:
-            # time.sleep(30)
-            # data['action'] = 'lock'
-            # lock.status = 'pending'
-            # lock.save()
-            # requests.post('http://52.43.75.183:5000', json=data)
             return
         print('Access Denied.')

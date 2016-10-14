@@ -17,13 +17,15 @@ import json
 @csrf_exempt
 def upload_file(request):
     if request.method == 'POST':
-        json_data = json.loads(request.body)
-        if json_data['action'] == 'start':
-            facial_recognition.train_recognizer()
-        else:
+        if request.FILES.get('webcam', None):
             f = request.FILES['webcam']
             f.name = "{}-{}-adasda".format('member', request.user.pk)
             new_file = Photo(user=request.user, image=f)
             new_file.save()
             return JsonResponse({})
+        else:
+            json_data = json.loads(request.body.decode('utf-8'))
+            if json_data.get('action', None) == 'train':
+                facial_recognition.train_recognizer()
+                return JsonResponse({'result': 'success'})
     return render(request, 'securedpi_facerec/training.html')
