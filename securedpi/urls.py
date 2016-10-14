@@ -30,15 +30,15 @@ urlpatterns = [
     url(r'^events/', include('securedpi_events.urls')),
     url(r'^profile/', include('securedpi_profile.urls')),
     url(r'^facerec/', include('securedpi_facerec.urls')),
+    # url(r'^$',
+    #     TemplateView.as_view(template_name='securedpi/home_page.html'),
+    #     name='homepage'),
     url(r'^$',
-        TemplateView.as_view(template_name='securedpi/home_page.html'),
-        name='homepage'),
-    url(r'^dashboard/',
         login_required(DashboardView.as_view()),
         name='dashboard'),
-    url(r'^about/$',
-        TemplateView.as_view(template_name='securedpi/about_page.html'),
-        name='about'),
+    # url(r'^about/$',
+    #     TemplateView.as_view(template_name='securedpi/about_page.html'),
+    #     name='about'),
 ]
 
 urlpatterns += [

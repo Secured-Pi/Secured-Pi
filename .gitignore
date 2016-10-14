@@ -90,13 +90,13 @@ ENV/
 .ropeproject
 
 # Photos of facial recognition
-facial_recognition/training/*
-facial_recognition/testing/*
-facial_recognition/david.sad
-facial_recognition/steven.png
-facial_recognition/tw.jpeg
-facial_recognition/recog_brain.yml
-facial_recognition/recog_brain-small.yml
-facial_recognition/recog_brain-med.yml
+securedpi_facerec/facial_recognition/training/*
+securedpi_facerec/facial_recognition/testing/*
+securedpi_facerec/facial_recognition/david.sad
+securedpi_facerec/facial_recognition/steven.png
+securedpi_facerec/facial_recognition/tw.jpeg
+securedpi_facerec/facial_recognition/recog_brain.yml
+securedpi_facerec/facial_recognition/recog_brain-small.yml
+securedpi_facerec/facial_recognition/recog_brain-med.yml
 lock_photos
 lock_photos/*
