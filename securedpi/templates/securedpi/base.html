@@ -2,30 +2,56 @@
 <html>
 
 <head>
-  <title>SecuredPi</title>
-  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+  <meta charset="UTF-8">
+  <title>Secured Pi | {% block title %} {% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
   {% load static %}
-  <link type="text/css" rel="stylesheet" href="{% static "css/base.css" %}" charset="utf-8">
+
+  <!-- Vendor css -->
+  <link rel="stylesheet" href="{% static "vendors/css/normalize.css" %}">
+  <link rel="stylesheet" href="{% static "vendors/css/fonts/font-awesome.min.css" %}">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+  <!-- Custom css -->
+  <link rel="stylesheet" href="{% static "css/modules.css" %}">
+  <link rel="stylesheet" href="{% static "css/layout.css" %}">
+  <link rel="stylesheet" href="{% static "css/base.css" %}">
+  {% block css %} {% endblock %}
 </head>
 
-<header>
-    <div class="nav">
-      <a class="nav-link" href="{% url 'homepage' %}">Home</a>
-      {% if user.is_authenticated %}
-        <a class="nav-link" href="{% url 'dashboard' %}">Welcome, {{ user.username }}</a>
-        <a class="nav-link" href="{% url 'profile' %}">Profile</a>
-        <a class="nav-link" href="{% url 'auth_logout' %}">Log Out</a>
-        <a class="nav-link" href="{% url 'securedpi_facerec:train' %}">Train</a>
-      {% endif %}
-      <a class="nav-link" href="{% url 'about' %}">About</a>
-    </div>
-</header>
-
 <body>
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <a type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </a>
+				<a class="navbar-brand" href="{% url 'homepage' %}"><img style="max-width: 50px;" id="nav-logo" src="{% static "img/logo.png" %}"></a>
+      </div>
+      <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="{% url 'homepage' %}">Home</a></li>
+          <li><a href="/">About</a></li>
+          <li><a href="/">Dashboard</a></li>
+          {% if user.is_authenticated %}
+            <a href="{% url 'dashboard' %}">Welcome, {{ user.username }}</a>
+            <a href="{% url 'profile' %}">Profile</a>
+            <a href="{% url 'auth_logout' %}">Log Out</a>
+            <a href="{% url 'securedpi_facerec:train' %}">Train</a>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+
   {% block body %} {% endblock %}
 
   <script type="text/javascript" src="{{ STATIC_ROOT }}/static/js/jquery-3.1.1.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
   {% block js %} {% endblock %}
 </body>
 

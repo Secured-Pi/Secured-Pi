@@ -6,7 +6,7 @@
     <div class="col-sm-12">
       <h2><strong>Training View</strong></h2>
       <button class="btn btn-primary" id="start-capture">Capture</button>
-      <button class="btn btn-danger" id="stop-capture">Stop</button>
+      <button class="btn btn-success" id="stop-capture">Start Training</button>
       <div class="col-sm-8" id="camera"></div>
     </div>
     <div class="col-sm-12" id="captured">
@@ -19,8 +19,6 @@
   {% block js %}
   <script type="text/javascript" src="{{ STATIC_ROOT }}/static/js/vendors/webcam.min.js"></script>
   <script type="text/javascript">
-  var trainingForm = new FormData()
-  trainingForm.append('csrfmiddlewaretoken', '{{ csrf_token }}')
 
   $(document).ready(function() {
     Webcam.set({
@@ -33,19 +31,14 @@
     Webcam.attach('#camera');
     var interval;
     $('#start-capture').click(function() {
-      interval = setInterval(function() {
+      for (var i = 0; i <= 15; i++) {
         Webcam.snap(function(image) {
-          trainingForm.append('file', image);
           $('<div class="col-sm-2"><img src="' + image + '"class="img-responsive"></div>').appendTo('#captured');
           Webcam.upload( image, '/facerec/train/', function(code, text) {
             console.log(text);
           });
         });
-      }, 2000);
-    });
-
-    $('#stop-capture').click(function() {
-      clearInterval(interval)
+      }
     });
   });
   </script>

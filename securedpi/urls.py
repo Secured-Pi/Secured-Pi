@@ -24,8 +24,8 @@ from securedpi.views import DashboardView
 
 
 urlpatterns = [
-    url(r'^admin/',admin.site.urls),
-    url(r'^accounts/',include('registration.backends.hmac.urls')),
+    url(r'^admin/', admin.site.urls),
+    url(r'^accounts/', include('registration.backends.hmac.urls')),
     url(r'^locks/', include('securedpi_locks.urls')),
     url(r'^events/', include('securedpi_events.urls')),
     url(r'^profile/', include('securedpi_profile.urls')),
