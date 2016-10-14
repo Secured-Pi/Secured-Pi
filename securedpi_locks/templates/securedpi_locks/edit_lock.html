@@ -1,21 +1,43 @@
 {% extends "securedpi/dashboard_base.html" %}
 {% block body %}
-<main class="meta">
+<div class="row wrapper border-bottom white-bg page-heading">
+  <div class="col-sm-4">
+    <h2>Access Log</h2>
+    <ol class="breadcrumb">
+      <li>
+        <a href="/">Home</a>
+      </li>
+      <li class="active">
+        <strong>Access Log</strong>
+      </li>
+    </ol>
+  </div>
+</div>
 
-    {% if form.errors %}
-      {{ form.errors }}
-    {% endif %}
+<div class="wrapper wrapper-content">
 
-    <form action="" method="post" class="form-edit">
-    {% csrf_token %}
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="ibox float-e-margins">
+        <div class="ibox-title">
+          <h5>Edit Lock</h5>
+        </div>
+        <div class="ibox-content">
+          {% if form.errors %}
+            {{ form.errors }}
+          {% endif %}
 
-      {{ form }}
+          <form action="" method="post">
+          {% csrf_token %}
 
-      <button class="btn btn-lg btn-success" type="submit">Update</button>
-      <a href="{% url 'delete_lock' lock.pk %}">
-        <input type="button" value="Delete Lock" class="btn btn-lg btn-danger">
-      <a>
-    </form>
+            {{ form }}
 
-</main>
+            <button class="btn btn-success" type="submit">Update</button>
+            <a href="{% url 'delete_lock' lock.pk %}" class="btn btn-danger">Delete This Lock<a>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}

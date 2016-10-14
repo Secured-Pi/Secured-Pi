@@ -35,13 +35,10 @@
       <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-right">
           <li><a href="{% url 'homepage' %}">Home</a></li>
-          <li><a href="/">About</a></li>
+          <li><a href="{% url 'about' %}">About</a></li>
           <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
           {% if user.is_authenticated %}
-            <a href="{% url 'dashboard' %}">Welcome, {{ user.username }}</a>
-            <a href="{% url 'profile' %}">Profile</a>
-            <a href="{% url 'auth_logout' %}">Log Out</a>
-            <a href="{% url 'securedpi_facerec:train' %}">Train</a>
+          <li><a href="{% url 'auth_logout' %}">Logout</a></li>
           {% endif %}
         </ul>
       </div>

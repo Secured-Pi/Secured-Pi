@@ -1,0 +1,21 @@
+{% extends "securedpi/dashboard_base.html" %}
+{% block body %}
+<main class="meta">
+
+    {% if form.errors %}
+      {{ form.errors }}
+    {% endif %}
+
+    <form action="" method="post" class="form-edit">
+    {% csrf_token %}
+
+      {{ form }}
+
+      <button class="btn btn-lg btn-success" type="submit">Update</button>
+      <a href="{% url 'delete_lock' lock.pk %}">
+        <input type="button" value="Delete Lock" class="btn btn-lg btn-danger">
+      <a>
+    </form>
+
+</main>
+{% endblock %}

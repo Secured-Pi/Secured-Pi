@@ -1,58 +1,26 @@
-<!DOCTYPE html>
-<html>
+{% extends "registration/registration_base.html" %}
+{% block title %}Login{% endblock %}
 
-<head>
-
-  {% load static %}
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Secured Pi | Login</title>
-
-  <link rel="stylesheet" href="{% static "vendors/css/fonts/font-awesome.min.css" %}">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-  <link rel="stylesheet" href="{% static "vendors/css/animate.min.css" %}">
-  <link rel="stylesheet" href="{% static "vendors/inspinia/css/style.css" %}">
-
-</head>
-
-<body class="gray-bg">
-
-  <div class="middle-box text-center loginscreen animated fadeIn">
-    <div>
-      <div>
-				<a href="{% url 'homepage' %}"><img style="max-width: 150px;" src="{% static "img/logo.png" %}"></a>
-
-      </div>
-      <h3>Welcome to <strong>Secured Pi</strong></h3>
-      <p>The best open-source security option out there (probably)
-      </p>
-      <p>Login in. To see it in action</p>
-      {% if error %}
-        <h1>{{ error }}</h1>
-      {% endif %}
-      <form class="m-t" role="form" method="post" action="">{% csrf_token %}
-        <div class="form-group">
-          <input type="text" name="username" class="form-control" placeholder="Username" required="">
-        </div>
-        <div class="form-group">
-          <input type="password" name="password" class="form-control" placeholder="Password" required="">
-        </div>
-        <button type="submit" class="btn btn-primary block full-width m-b">Login</button>
-
-        <a href="#"><small>Forgot password?</small></a>
-        <p class="text-muted text-center"><small>Do you not have an account? What are you waiting for?</small></p>
-        <a class="btn btn-sm btn-white btn-block" href="{% url "registration_register" %}">Create an account</a>
-      </form>
-      <p class="m-t"> <small>Visit our source code at Github &copy; 2016</small> </p>
-    </div>
+{% block body %}
+<h3>Welcome to <strong>Secured Pi</strong></h3>
+<p>The best open-source security option out there (probably)
+</p>
+<p>Login in. To see it in action</p>
+{% if error %}
+  <h1>{{ error }}</h1>
+{% endif %}
+<form class="m-t" role="form" method="post" action="">{% csrf_token %}
+  <div class="form-group">
+    <input type="text" name="username" class="form-control" placeholder="Username" required="">
   </div>
+  <div class="form-group">
+    <input type="password" name="password" class="form-control" placeholder="Password" required="">
+  </div>
+  <button type="submit" class="btn btn-primary block full-width m-b">Login</button>
 
-
-  <!-- Mainly scripts -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
-</body>
-
-</html>
+  <a href="#"><small>Forgot password?</small></a>
+  <p class="text-muted text-center"><small>Do you not have an account? What are you waiting for?</small></p>
+  <a class="btn btn-sm btn-white btn-block" href="{% url "registration_register" %}">Create an account</a>
+</form>
+<p class="m-t"> <small>Secured Pi &copy; 2016</small> </p>
+{% endblock %}
