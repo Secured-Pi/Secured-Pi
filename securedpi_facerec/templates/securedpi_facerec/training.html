@@ -6,7 +6,7 @@
     <div class="col-sm-12">
       <h2><strong>Training View</strong></h2>
       <button class="btn btn-primary" id="start-capture">Capture</button>
-      <button class="btn btn-success" id="stop-capture">Start Training</button>
+      <button class="btn btn-success" id="start-training">Start Training</button>
       <div class="col-sm-8" id="camera"></div>
     </div>
     <div class="col-sm-12" id="captured">
@@ -29,7 +29,7 @@
     });
 
     Webcam.attach('#camera');
-    var interval;
+
     $('#start-capture').click(function() {
       for (var i = 0; i <= 15; i++) {
         Webcam.snap(function(image) {
@@ -40,6 +40,20 @@
         });
       }
     });
+
+    $('#start-training').click(function() {
+      $.ajax({
+          type: "POST",
+          url: "/facerec/train/",
+          data: JSON.stringify({ action: 'train'}),
+          contentType: "application/json; charset=utf-8",
+          dataType: "json",
+          success: function(data){alert(data);},
+          failure: function(errMsg) {
+              alert(errMsg);
+          }
+      });
+    })
   });
   </script>
 </section>
