@@ -9,7 +9,7 @@ from django.http import JsonResponse
 from .forms import PhotoForm
 from .models import Photo
 from django.views.decorators.csrf import csrf_exempt
-from .facial_recognition.facial_recognition import train_recognizer
+from securedpi_facerec.facial_recognition import facial_recognition
 
 
 @login_required
@@ -17,7 +17,7 @@ from .facial_recognition.facial_recognition import train_recognizer
 def upload_file(request):
     if request.method == 'POST':
         if request.POST['start_training']:
-            train_recognizer()
+            facial_recognition.train_recognizer()
         else:
             f = request.FILES['webcam']
             f.name = "{}-{}-adasda".format('member', request.user.pk)

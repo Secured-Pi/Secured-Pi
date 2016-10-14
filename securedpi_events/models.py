@@ -5,7 +5,7 @@ from securedpi_locks.models import Lock
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 import requests
-from facial_recognition.facial_recognition import test_individual
+from securedpi_facerec import facial_recognition
 
 
 @python_2_unicode_compatible
