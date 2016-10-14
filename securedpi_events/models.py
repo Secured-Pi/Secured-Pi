@@ -5,7 +5,7 @@ from securedpi_locks.models import Lock
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 import requests
-from securedpi_facerec import facial_recognition
+from securedpi_facerec.facial_recognition import facial_recognition
 
 
 @python_2_unicode_compatible
@@ -40,7 +40,7 @@ def start_FR(sender, **kwargs):
     event = kwargs['instance']
 
     if event.photo:
-        dj_decision = test_individual(event.photo.url, verbose=True)
+        dj_decision = facial_recognition.test_individual(event.photo.url, verbose=True)
         username = User.objects.get(pk=dj_decision[0]).username
         print('face recognized: ', dj_decision[0], ' as member ', username)
 
