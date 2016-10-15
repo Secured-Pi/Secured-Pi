@@ -25,7 +25,7 @@ https://pythonprogramming.net/loading-video-python-opencv-tutorial/
 """
 
 import os
-import cv3
+import cv2
 import numpy as np
 import re
 from PIL import Image
