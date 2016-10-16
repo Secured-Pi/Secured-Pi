@@ -5,7 +5,7 @@ import os
 
 
 class FaceRecTestCase(TestCase):
-    """Create test class for Event model."""
+    """Create test class for Facial Recognition."""
 
     def setUp(self):
         self.HERE = os.path.dirname(os.path.abspath(__file__))
