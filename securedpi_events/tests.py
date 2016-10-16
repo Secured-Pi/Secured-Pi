@@ -4,8 +4,6 @@ from django.contrib.auth.models import User
 from securedpi_events.models import Event
 from securedpi_locks.models import Lock
 from django.urls import reverse
-from securedpi_locks.tests import SetupTestCase
-
 
 
 class EventTestCase(TestCase):
@@ -63,9 +61,9 @@ class EventFactory(factory.Factory):
     """Create an event factory."""
     class Meta:
         model = Event
-    action='unlock'
-    mtype='manual'
-    serial='test'
+    action = 'unlock'
+    mtype = 'manual'
+    serial = 'test'
 
 
 class EventViewTestCase(TestCase):
