@@ -64,33 +64,23 @@ class LockAccessCase(TestCase):
             self.assertEqual(len(response.redirect_chain), 1)
             self.assertTupleEqual(response.redirect_chain[0], expected)
 
-            
+
 class SetupTestCase(TestCase):
     """
-    Define class for tests setup. All other test classes inherit
-    form this class.
+    Define class for tests setup.
+    EditLockTestCase and DeleteLockTestCase classes inherit form this class.
     """
     def setUp(self):
         """Define setup for tests."""
         self.user = User(username='test')
         self.user.save()
         self.client.force_login(user=self.user)
-        self.lock1 = Lock(
+        self.lock = Lock(
             user=self.user,
-            name='lock1',
+            name='test_lock',
             location='codefellows',
             serial='pi12345')
-        self.lock1.save()
-        self.lock2 = Lock(
-            user=self.user,
-            name='lock2',
-            location='codefellows',
-            serial='pi1234512345')
-        self.lock2.save()
-        self.expected1 = 'href="{}"'.format(
-            reverse('manual_lock', kwargs={'pk': self.lock1.pk, 'action': 'lock'}))
-        self.expected2 = 'href="{}"'.format(
-            reverse('manual_unlock', kwargs={'pk': self.lock1.pk, 'action': 'unlock'}))
+        self.lock.save()
 
 
 class EditLockTestCase(SetupTestCase):
@@ -98,11 +88,11 @@ class EditLockTestCase(SetupTestCase):
     def setUp(self):
         """Set up for the test case class."""
         self.setUp = super(EditLockTestCase, self).setUp()
-        self.url = reverse('edit_lock', kwargs={'pk': self.lock1.pk})
+        self.url = reverse('edit_lock', kwargs={'pk': self.lock.pk})
         self.response = self.client.get(self.url)
         self.template = 'securedpi_locks/edit_lock.html'
         self.data = {
-            "name": 'lock1_updated',
+            "name": 'lock_updated',
             "location": "codefellows",
             "description": "closet",
             "serial": "pi12345"
@@ -123,21 +113,24 @@ class EditLockTestCase(SetupTestCase):
     def test_redirect_on_update_from_edit_lock_page(self):
         """Prove redirection to dashboard page after updating a lock."""
         response = self.client.post(self.url, self.data)
-        self.assertEquals(response.status_code, 302)
-        self.assertEquals(response.url, reverse('dashboard'))
+        self.assertRedirects(
+            response,
+            expected_url=reverse('dashboard'),
+            status_code=302,
+            target_status_code=200)
 
     def test_lock_info_updated(self):
         """Prove that lock info was updated."""
-        self.assertEqual(self.lock1.name, 'lock1')
-        self.assertEqual(self.lock1.location, 'codefellows')
-        self.assertEqual(self.lock1.serial,'pi12345')
-        self.assertEqual(self.lock1.description, '')
+        self.assertEqual(self.lock.name, 'test_lock')
+        self.assertEqual(self.lock.location, 'codefellows')
+        self.assertEqual(self.lock.serial,'pi12345')
+        self.assertEqual(self.lock.description, '')
         self.client.post(self.url, self.data)
-        lock1 = Lock.objects.filter(user=self.user).first()
-        self.assertEqual(lock1.name, 'lock1_updated')
-        self.assertEqual(lock1.description, 'closet')
-        self.assertEqual(lock1.location, 'codefellows')
-        self.assertEqual(lock1.serial,'pi12345')
+        lock = Lock.objects.filter(user=self.user).first()
+        self.assertEqual(lock.name, 'lock_updated')
+        self.assertEqual(lock.description, 'closet')
+        self.assertEqual(lock.location, 'codefellows')
+        self.assertEqual(lock.serial,'pi12345')
 
     def test_number_of_locks_didnt_change(self):
         """
@@ -150,3 +143,48 @@ class EditLockTestCase(SetupTestCase):
         # number of locks after update
         count2 = self.user.locks.all().count()
         self.assertEqual(count1, count2)
+
+    def test_delete_btn_present(self):
+        """Make sure <Delete> button is present."""
+        expected = 'href="{}"'.format(reverse('delete_lock', kwargs={'pk': self.lock.pk}))
+        self.assertContains(self.response, expected)
+
+
+class DeleteLockTestCase(SetupTestCase):
+    """Define class to test delete lock view."""
+    def setUp(self):
+        """Setup for testing."""
+        self.setUp = super(DeleteLockTestCase, self).setUp()
+        self.url = reverse('delete_lock', kwargs={'pk': self.lock.pk})
+        self.response = self.client.get(self.url)
+        self.template = 'securedpi_locks/lock_confirm_delete.html'
+
+    def test_auth_user_have_access_to_delete_edit(self):
+        """Prove that auth user has access to the lock edit."""
+        self.assertEqual(self.response.status_code, 200)
+
+    def test_right_template_is_used(self):
+        """Prove that the right template is used to render delete lock page."""
+        self.assertTemplateUsed(self.response, self.template)
+
+    def test_correct_lock_name_displayed(self):
+        """
+        Make sure the correct lock name is displayed
+        on the delete confirm page.
+        """
+        self.assertContains(self.response, 'test_lock')
+
+    def delete_btn_works(self):
+        """Make sure <Delete> btn works."""
+        self.assertEquals(self.user.locks.count(), 1)
+        self.client.post(self.url)
+        self.assertEquals(self.user.locks.count(), 0)
+
+    def test_redirection_to_dashboard_after_deletion(self):
+        """Prove redirection to dashboard after deletion of a lock."""
+        response = self.client.post(self.url)
+        self.assertRedirects(
+            response,
+            expected_url=reverse('dashboard'),
+            status_code=302,
+            target_status_code=200)

@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.urls import reverse
 from django.core import mail
 from django.contrib.auth.models import User
-from securedpi_locks.tests import SetupTestCase
+from securedpi_locks.models import Lock
 
 
 # class HomePageTestCase(TestCase):
@@ -11,55 +11,11 @@ from securedpi_locks.tests import SetupTestCase
 #     def setUp(self):
 #         """Set up response for home page test case."""
 #         self.response = self.client.get(reverse("homepage"))
-#
-#     def test_unauth_access_homepage(self):
-#         """Prove that an unauth user can access the home page."""
-#         self.assertEqual(self.response.status_code, 200)
-#
-#     def test_home_page_uses_right_template(self):
-#         """Assert that the home page is rendered with right template."""
-#         for template_name in [
-#             'securedpi/home_page.html', 'securedpi/base.html'
-#         ]:
-#             self.assertTemplateUsed(self.response, template_name)
-#
-#     def test_for_registration_button(self):
-#         """Prove home page contains registration page link."""
-#         reg_url = reverse("registration_register")
-#         expected = 'href="{}"'.format(reg_url)
-#         self.assertContains(self.response, expected, status_code=200)
-#
-#     def test_for_login_button(self):
-#         """Assert that home page contains a link to the login page"""
-#         login_url = reverse('auth_login')
-#         expected = 'href="{}"'.format(login_url)
-#         self.assertContains(self.response, expected, status_code=200)
-#
-#     def test_about_link_in_nav(self):
-#         """Make sure an unauth user has <About> in the nav."""
-#         expected = 'href="{}"'.format(reverse('about'))
-#         self.assertContains(self.response, expected)
-    #
-    # def test_home_link_in_nav(self):
-    #     """Make sure an unauth user has <Home> in the nav."""
-    #     expected = 'href="{}"'.format(reverse('homepage'))
-    #     self.assertContains(self.response, expected)
-    #
+
     # def test_unauth_access_about_page(self):
     #     """Prove that an unauth user can access About page."""
     #     response = self.client.get(reverse('about'))
     #     self.assertEqual(response.status_code, 200)
-
-    # def test_no_auth_links_in_nav_if_unauth(self):
-    #     """
-    #     Make sure there are no links associated with auth user view
-    #     in the nav if unauth.
-    #     """
-    #     auth_links = [
-    #         'auth_logout',
-    #     ]
-    #     for link in auth_links:
-    #         self.assertNotContains(self.response, link)
 
 
 class RegistrationTestCase(TestCase):
@@ -83,8 +39,8 @@ class RegistrationTestCase(TestCase):
 
     def test_registration_page_uses_right_template(self):
         """Assert that registration page is rendered with right template."""
-        template_name = 'registration/registration_form.html'
-        self.assertTemplateUsed(self.get_response, template_name)
+        template = 'registration/registration_form.html'
+        self.assertTemplateUsed(self.get_response, template)
 
     def test_redirect_after_registred(self):
         """Test redirection from the page on successful registration."""
@@ -124,6 +80,33 @@ class EmailTest(TestCase):
         self.assertEqual(mail.outbox[0].from_email, "user@djangoimager.com")
 
 
+class LoginPageTestCase(TestCase):
+    """Define clas  for login page testing."""
+    def setUp(self):
+        """Set up for testing."""
+        self.url = reverse('auth_login')
+        self.response = self.client.get(self.url)
+
+    def test_access_for_unauth_users(self):
+        """Make sure unauth users have access to Login page."""
+        self.assertEqual(self.response.status_code, 200)
+
+    def test_for_registration_button(self):
+        """Prove login page contains registration page link."""
+        reg_url = reverse("registration_register")
+        expected = 'href="{}"'.format(reg_url)
+        self.assertContains(self.response, expected)
+
+    def test_fields_of_login_form(self):
+        """Test that <username> and <password> fields are present."""
+        username_filed = 'input type="text" name="username"'
+        pass_field = 'input type="password" name="password"'
+        login_button = "Login"
+        expected = [username_filed, pass_field]
+        for field in expected:
+            self.assertContains(self.response, field)
+
+
 class LoginLogoutTestCase(TestCase):
     """Define test case for Login/Logout functionality."""
     def setUp(self):
@@ -131,7 +114,6 @@ class LoginLogoutTestCase(TestCase):
         self.user = User(username='test')
         self.user.set_password('testpassword&#')
         self.user.save()
-        # self.home_url = reverse('homepage')
         self.dashboard_url = reverse('dashboard')
         self.login_url = reverse('auth_login')
         self.logout_url = reverse('auth_logout')
@@ -170,22 +152,30 @@ class LoginLogoutTestCase(TestCase):
         """Prove redirection to the home page after loggin out."""
         self.assertEqual(self.logout_response.url, self.dashboard_url)
 
-    # def test_welcome_username_linked_to_page(self):
-    #     """Test that 'Welcome, <username>' links to expected page."""
-    #     expected = 'href="{}"'.format(self.dashboard_url)
-    #     self.assertContains(self.login_response_follow, expected)
 
-    def test_logout_button_exists(self):
-        """Test auth user has logout button that links to correct url."""
-        expected = 'href="{}"'.format(self.logout_url)
-        self.assertContains(self.login_response_follow, expected)
-
-
-class DashboardViewTestCase(SetupTestCase):
+class DashboardViewTestCase(TestCase):
     """Define test class for Dashboard view."""
     def setUp(self):
         """Define setup for tests."""
-        self.setUp = super(DashboardViewTestCase, self).setUp()
+        self.user = User(username='test')
+        self.user.save()
+        self.client.force_login(user=self.user)
+        self.lock1 = Lock(
+            user=self.user,
+            name='lock1',
+            location='codefellows',
+            serial='pi12345')
+        self.lock1.save()
+        self.lock2 = Lock(
+            user=self.user,
+            name='lock2',
+            location='codefellows',
+            serial='pi1234512345')
+        self.lock2.save()
+        self.expected1 = 'href="{}"'.format(
+            reverse('manual_lock', kwargs={'pk': self.lock1.pk, 'action': 'lock'}))
+        self.expected2 = 'href="{}"'.format(
+            reverse('manual_unlock', kwargs={'pk': self.lock1.pk, 'action': 'unlock'}))
         self.url = reverse('dashboard')
         self.response = self.client.get(self.url)
         self.template = 'securedpi/dashboard.html'
@@ -206,6 +196,44 @@ class DashboardViewTestCase(SetupTestCase):
         """Prove that correct number of locks renders on the dashboard."""
         self.assertEqual(self.response.context['locks'].count(), 2)
 
+    def test_username_displayed(self):
+        """Make sure correct username is displayed."""
+        self.assertContains(self.response, 'test')
+
+    def test_expected_links_displayed(self):
+        """Test thatexpected links and username are displayed."""
+        urls = [
+            'profile',
+            'securedpi_facerec:train',
+            'auth_logout',
+        ]
+        for url in urls:
+            expected_link = 'href="{}"'.format(reverse(url))
+            self.assertContains(self.response, expected_link)
+
+    def test_lock_buttons_present(self):
+        """Make sure each lock has <Edit> and <Access Log> buttons present."""
+        lock_pks = [self.lock1.pk, self.lock2.pk]
+        for lock_pk in lock_pks:
+            edit_link = 'href="{}"'.format(reverse('edit_lock', kwargs={'pk': lock_pk}))
+            log_link = 'href="{}"'.format(reverse('events', kwargs={'pk': lock_pk}))
+            self.assertContains(self.response, edit_link)
+            self.assertContains(self.response, log_link)
+
+    def test_lock_info_present(self):
+        """Make sure all lock have their info displayed."""
+        locks = [self.lock1, self.lock2]
+        for lock in locks:
+            info = [
+                lock.name,
+                lock.pk,
+                lock.serial,
+                lock.location,
+                lock.facial_recognition
+                ]
+            for item in info:
+                self.assertContains(self.response, item)
+
     def test_buttons_display_if_unlocked(self):
         """
         Make sure <Lock> button shows up and <Unlock> doesn't
@@ -214,6 +242,7 @@ class DashboardViewTestCase(SetupTestCase):
         self.lock1.is_active = True
         self.lock1.save()
         response = self.client.get(self.url)
+        self.assertContains(response, 'UNLOCKED')
         self.assertContains(response, self.expected1)
         self.assertNotContains(response, self.expected2)
 
@@ -226,6 +255,7 @@ class DashboardViewTestCase(SetupTestCase):
         self.lock1.is_active = True
         self.lock1.save()
         response = self.client.get(self.url)
+        self.assertContains(response, 'LOCKED')
         self.assertNotContains(response, self.expected1)
         self.assertContains(response, self.expected2)
 
@@ -238,6 +268,7 @@ class DashboardViewTestCase(SetupTestCase):
         self.lock1.is_active = True
         self.lock1.save()
         response = self.client.get(self.url)
+        self.assertContains(response, 'PENDING')
         self.assertContains(response, self.expected1)
         self.assertContains(response, self.expected2)
 
@@ -249,5 +280,6 @@ class DashboardViewTestCase(SetupTestCase):
         self.lock1.is_active = False
         self.lock1.save()
         response = self.client.get(self.url)
+        self.assertContains(response, 'NOT ACTIVE')
         self.assertNotContains(response, self.expected1)
         self.assertNotContains(response, self.expected2)
