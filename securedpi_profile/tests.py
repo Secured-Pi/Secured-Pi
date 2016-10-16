@@ -125,8 +125,11 @@ class EditProfileTestCase(TestCase):
         the profile.
         """
         response = self.client.post(self.url)
-        self.assertEquals(response.status_code, 302)
-        self.assertEquals(response.url, '/profile/')
+        self.assertRedirects(
+            response,
+            expected_url=reverse('profile'),
+            status_code=302,
+            target_status_code=200)
 
     def test_updated_info_shows_up(self):
         """Prove that updated profile info shows up on profile page."""

@@ -1,14 +1,10 @@
 from rest_framework import serializers
 from securedpi_locks.models import Lock
 from securedpi_events.models import Event
-from django.contrib.auth.models import User
 
 
 class EventSerializer(serializers.ModelSerializer):
-    # lock_id = serializers.ReadOnlyField(source='user.username')
-    # highlight = serializers.HyperlinkedIdentityField(
-    #     view_name='snippet-highlight', format='html')
-
+    """Define class to serialize events."""
     class Meta:
         model = Event
         fields = ('pk', 'lock_id', 'photo', 'mtype', 'status',
@@ -16,9 +12,8 @@ class EventSerializer(serializers.ModelSerializer):
 
 
 class LockSerializer(serializers.ModelSerializer):
+    """Define class to serialize locks."""
     user = serializers.ReadOnlyField(source='user.username')
-    # highlight = serializers.HyperlinkedIdentityField(
-    #     view_name='snippet-highlight', format='html')
 
     class Meta:
         model = Lock

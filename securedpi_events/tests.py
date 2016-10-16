@@ -1,9 +1,9 @@
 from django.test import TestCase
+import factory
 from django.contrib.auth.models import User
 from securedpi_events.models import Event
 from securedpi_locks.models import Lock
 from django.urls import reverse
-from securedpi_locks.tests import SetupTestCase
 
 
 class EventTestCase(TestCase):
@@ -57,19 +57,29 @@ class EventAccessCase(TestCase):
             self.assertTupleEqual(response.redirect_chain[0], expected)
 
 
-class EventViewTestCase(SetupTestCase):
+class EventFactory(factory.Factory):
+    """Create an event factory."""
+    class Meta:
+        model = Event
+    action = 'unlock'
+    mtype = 'manual'
+    serial = 'test'
+
+
+class EventViewTestCase(TestCase):
     """Define test class for event view."""
     def setUp(self):
         """Define setup for tests."""
-        self.setUp = super(EventViewTestCase, self).setUp()
-        self.url = reverse('events', kwargs={'pk': self.lock1.pk})
+        self.user = User(username='test')
+        self.user.save()
+        self.lock = Lock(user=self.user, serial='1', name='a', location='b')
+        self.lock.save()
+        self.client.force_login(user=self.user)
+        self.url = reverse('events', kwargs={'pk': self.lock.pk})
         self.template = 'securedpi_events/events.html'
-        self.event1 = Event(lock_id=self.lock1.pk, serial=self.lock1.serial,
-                            action='unlock', mtype='manual')
-        self.event1.save()
-        self.event2 = Event(lock_id=self.lock1.pk, serial=self.lock1.serial,
-                            action='unlock', mtype='manual')
-        self.event2.save()
+        events = EventFactory.build_batch(10, lock_id=self.lock.pk)
+        for event in events:
+            event.save()
         self.response = self.client.get(self.url)
 
     def test_auth_user_has_access_to_events(self):
@@ -86,4 +96,18 @@ class EventViewTestCase(SetupTestCase):
 
     def test_correct_number_of_events_page(self):
         """Prove that correct number of events renders on the events page."""
-        self.assertEqual(self.response.context['events'].count(), 2)
+        self.assertEqual(self.response.context['events'].count(), 10)
+
+    def test_delete_btn_present(self):
+        """Prove that <delete_10_oldest_events> button present."""
+        url = reverse('delete_old_events', kwargs={'pk': self.lock.pk})
+        expected = 'href="{}"'.format(url)
+        self.assertContains(self.response, expected)
+
+    def test_delete_btn_works(self):
+        """Prove <delete_10_oldest_events> btn works as expected."""
+        count = Event.objects.filter(lock_id=self.lock.pk).count()
+        self.assertEqual(count, 10)
+        self.client.get(reverse('delete_old_events', kwargs={'pk': self.lock.pk}))
+        count = Event.objects.filter(lock_id=self.lock.pk).count()
+        self.assertEqual(count, 0)
