@@ -32,10 +32,7 @@ urlpatterns = [
     url(r'^facerec/', include('securedpi_facerec.urls')),
     url(r'^$',
         login_required(DashboardView.as_view()),
-        name='dashboard'),
-    # url(r'^about/$',
-    #     TemplateView.as_view(template_name='securedpi/about_page.html'),
-    #     name='about'),
+        name='dashboard')
 ]
 
 urlpatterns += [

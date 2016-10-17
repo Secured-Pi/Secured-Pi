@@ -5,19 +5,6 @@ from django.contrib.auth.models import User
 from securedpi_locks.models import Lock
 
 
-# class HomePageTestCase(TestCase):
-#     """Create Home Page test case."""
-#
-#     def setUp(self):
-#         """Set up response for home page test case."""
-#         self.response = self.client.get(reverse("homepage"))
-
-    # def test_unauth_access_about_page(self):
-    #     """Prove that an unauth user can access About page."""
-    #     response = self.client.get(reverse('about'))
-    #     self.assertEqual(response.status_code, 200)
-
-
 class RegistrationTestCase(TestCase):
     """Setup Registration test case."""
     def setUp(self):
