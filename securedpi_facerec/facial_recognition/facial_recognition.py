@@ -18,7 +18,7 @@ member-1-b.gif
 member-2-a.gif
 member-2-b.gif .. and so on ..
 
-For accuracy, we recommend a minimum of __ pictures for each member.  It is
+For accuracy, we recommend a -minimum- of 10 pictures for each member.  It is
 also important that no other files be contained in the training directory
 besides the pictures. Just want to thank the creators of the tutorials at:
 https://pythonprogramming.net/loading-video-python-opencv-tutorial/
