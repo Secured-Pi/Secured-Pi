@@ -9,7 +9,7 @@ This code is for the main Django server.
 First, you need to install OpenCV3 with facial recognition packages.  There
 re several ways of doing this, and I recommend researching it if you have not
 done this before.
-Then, after cloning this repo and cd into teh project directory:
+Then, after cloning this repo and cd into the project directory:
 ```
 python3 -m venv ENV
 source ENV/bin/activate
