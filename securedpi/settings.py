@@ -16,6 +16,7 @@ import dj_database_url
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+DEBUG = os.environ.get('DEBUG', False)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
@@ -158,20 +159,24 @@ STATIC_ROOT = BASE_DIR
 
 
 ACCOUNT_ACTIVATION_DAYS = 7
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS")
-EMAIL_BACKEND = os.environ.get("EMAIL_BACKEND")
-EMAIL_HOST = os.environ.get("EMAIL_HOST")
-EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
-EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
-DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL")
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("SECRET_KEY")
+if not DEBUG:
+    ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS")
+    EMAIL_BACKEND = os.environ.get("EMAIL_BACKEND")
+    EMAIL_HOST = os.environ.get("EMAIL_HOST")
+    EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
+    EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
+    DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL")
+    EMAIL_PORT = 587
+    EMAIL_USE_TLS = True
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', False)
+    SECRET_KEY = os.environ.get("SECRET_KEY")
+    FLASK_SERVER = os.environ.get('FLASK_SERVER')
+else:
+    ALLOWED_HOSTS = ['*']
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+    SECRET_KEY = 'poodles'
+    FLASK_SERVER = '127.0.0.1'
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
