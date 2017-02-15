@@ -6,7 +6,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 import requests
 from securedpi_facerec.facial_recognition import facial_recognition
-from seccuredpi.settings import FLASK_SERVER
+from securedpi.settings import FLASK_SERVER
 
 
 @python_2_unicode_compatible
