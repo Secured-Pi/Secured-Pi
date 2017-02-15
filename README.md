@@ -25,14 +25,13 @@ The raspberry pi uses facial detection to identify a human face, and the Django 
 responsible for actually recognizing the face and issuing commands to unlock the lock.
 
 ## Setup instructions:
-First, you need to install OpenCV3 with facial recognition packages.  There
+First, you need to install OpenCV3 with the additional facial recognition module.  There
 re several ways of doing this, and I recommend researching it if you have not
 done this before.  Then, after cloning this repo and cd into the project directory:
 
 - Create a postgres database named 'securedpi'
 
 Then:
-
 ```
 python3 -m venv ENV
 source ENV/bin/activate
