@@ -1,6 +1,10 @@
 # Secured-Pi
 Code 401 (Python) - final project
 
+This was a final project (week-long) for the Code Fellows Python 401 Advanced Software Development
+course taught by Cris Ewing.  There are still many un-implemented features which may continue
+to be worked on in the future, as this project is still in the somewhat 'early' stages.
+
 ## Description
 Python web application for a smart lock powered by Raspberry Pi; features facial recognition for
 security.  This code is for the main Django server.
@@ -25,9 +29,7 @@ The raspberry pi uses facial detection to identify a human face, and the Django 
 responsible for actually recognizing the face and issuing commands to unlock the lock.
 
 ## Setup instructions:
-First, you need to install OpenCV3 with the additional facial recognition module.  There
-re several ways of doing this, and I recommend researching it if you have not
-done this before.  Then, after cloning this repo and cd into the project directory:
+After cloning this repo and cd into the project directory:
 
 - Create a postgres database named 'securedpi'
 
@@ -36,10 +38,27 @@ Then:
 python3 -m venv ENV
 source ENV/bin/activate
 pip install -r requirements.txt
+```
+
+Then, you need to install OpenCV3 with the additional facial recognition module.  There
+re several ways of doing this, and I recommend researching it if you have not
+done this before.
+
+Then, create a superuser:
+```
+./manage.py createsuperuser
+```
+
+```
 export DEBUG=True
 ./manage.py migrate
 ./manage.py runserver
 ```
+
+Then, go ahead and create a user account for yourself.  More instructions to come for:
+- setting up flask server
+- setting up raspberry pi
+- training facial recognition
 
 
 ## Contributors:
