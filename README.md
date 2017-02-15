@@ -51,6 +51,11 @@ export DEBUG=True
 ./manage.py runserver
 ```
 
+Then, go ahead and create a user account for yourself.  More instructions to come for:
+- setting up flask server
+- setting up raspberry pi
+- training facial recognition
+
 
 ## Contributors:
 * Steven Than
