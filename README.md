@@ -1,6 +1,10 @@
 # Secured-Pi
 Code 401 (Python) - final project
 
+This was a final project (week-long) for the Code Fellows Python 401 Advanced Software Development
+course taught by Cris Ewing.  There are still many un-implemented features which may continue
+to be worked on in the future, as this project is still in the somewhat 'early' stages.
+
 ## Description
 Python web application for a smart lock powered by Raspberry Pi; features facial recognition for
 security.  This code is for the main Django server.
