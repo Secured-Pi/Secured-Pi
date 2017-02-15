@@ -176,7 +176,7 @@ else:
     ALLOWED_HOSTS = ['*']
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
     SECRET_KEY = 'poodles'
-    FLASK_SERVER = '127.0.0.1'
+    FLASK_SERVER = 'http://127.0.0.1'
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'

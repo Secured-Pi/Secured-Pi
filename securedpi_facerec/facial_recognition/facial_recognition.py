@@ -49,8 +49,10 @@ def train_recognizer(recognizer=cv2.face.createLBPHFaceRecognizer,
     will be used by test_individual to verify membership.
     """
     recognizer = recognizer()
+
     if recog_model is not None:
         recognizer.load(recog_model)
+
     tr_files = os.listdir(image_path)
     tr_files = [image_path + '/' + f for f in tr_files]
     images = []         # image arrays of face cut-outs
@@ -71,6 +73,7 @@ def train_recognizer(recognizer=cv2.face.createLBPHFaceRecognizer,
                 cv2.waitKey(20)
     if demo:
         cv2.destroyAllWindows()
+
     recognizer.train(images, np.array(members))
     recognizer.save(save_file)
 
