@@ -40,7 +40,11 @@ Then, you need to install OpenCV3 with the additional facial recognition module.
 re several ways of doing this, and I recommend researching it if you have not
 done this before.
 
-Then,
+Then, create a superuser:
+```
+./manage.py createsuperuser
+```
+
 ```
 export DEBUG=True
 ./manage.py migrate
