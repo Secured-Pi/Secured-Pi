@@ -42,20 +42,22 @@ pip install -r requirements.txt
 
 Then, you need to install OpenCV3 with the additional facial recognition module.  There
 re several ways of doing this, and I recommend researching it if you have not
-done this before.
+done this before.  You can either install it in this virtual environment, or you can install it
+globally and copy lib files into the virtual environment.
 
 Then, create a superuser:
 ```
 ./manage.py createsuperuser
 ```
 
+Then, set our DEBUG env variable to False, and migrate and runserver.
 ```
 export DEBUG=True
 ./manage.py migrate
 ./manage.py runserver
 ```
 
-Then, go ahead and create a user account for yourself.  More instructions to come for:
+Then, go ahead and create a user account for yourself on the site.  More instructions to come for:
 - setting up flask server
 - setting up raspberry pi
 - training facial recognition
