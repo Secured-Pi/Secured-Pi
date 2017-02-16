@@ -6,7 +6,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 import requests
 from securedpi_facerec.facial_recognition import facial_recognition
-from securedpi.settings import FLASK_SERVER
+from securedpi.settings import FLASK_SERVER, UNCERTAINTY_THRESHOLD
 
 
 @python_2_unicode_compatible
@@ -48,7 +48,7 @@ def start_FR(sender, **kwargs):
         username = User.objects.get(pk=dj_decision[0]).username
         print('**face recognized: ', dj_decision[0], ' as member ', username)
         user_owns_lock = dj_decision[0] == lock.user.pk
-        confidence_acceptable = dj_decision[1] < 45
+        confidence_acceptable = dj_decision[1] < UNCERTAINTY_THRESHOLD
         matching_rfid = event.RFID == lock.RFID
         print('User has access to lock: ', user_owns_lock)
         print('Confidence acceptable: ', confidence_acceptable, dj_decision[1])
@@ -66,5 +66,6 @@ def start_FR(sender, **kwargs):
             lock.save()
             print('User authorized, sending unlock request.')
             requests.post(FLASK_SERVER + ':5000', json=data)
+            print('Request sent to Flask server.')
             return
         print('Access Denied.')
