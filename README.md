@@ -33,15 +33,16 @@ After cloning this repo and cd into the project directory:
 
 - Install postgres (if needed) and create a database named 'securedpi'
 
-Then:
+Then, create a virtual environment and install requirements:
 ```
 python3 -m venv ENV
 source ENV/bin/activate
+pip install -U pip setuptools
 pip install -r requirements.txt
 ```
 
 Then, you need to install OpenCV3 with the additional facial recognition module.  There
-re several ways of doing this, and I recommend researching it if you have not
+are several ways of doing this, and I recommend researching it if you have not
 done this before.  You can either install it in this virtual environment, or you can install it
 globally and copy lib files into the virtual environment.
 
@@ -62,8 +63,8 @@ Then, go ahead and create a user account for yourself on the site.  More instruc
 
 1) Setting up the Flask server
 - Clone the flask-socketio-server repository
-- Create a virtual environment, install requirements.txt
-- Run the server with ./server.py
+- Create a virtual environment, install by: pip install -r requirements.txt
+- Run the server with ./src/server.py
 
 2) Setting up Raspberry Pi
 - Setup Raspberry Pi by connecting RFID, webcam, and updating the software.  Consider a breadboard.
