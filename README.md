@@ -58,7 +58,8 @@ export DEBUG=True
 ./manage.py runserver
 ```
 
-Then, go ahead and create a user account for yourself on the site.  More instructions to come for:
+Then, go ahead and create a user account for yourself on the site.  More instructions to come:
+
 (Just a high level overview is here for now)
 
 1) Setting up the Flask server
