@@ -69,13 +69,14 @@ Then, go ahead and create a user account for yourself on the site.  More instruc
 - Clone the raspberry-pi-client repository on to the device.
 - Create a virtual environment, activate it, install requirements.txt, and OpenCV.  OpenCV2 is
 sufficient, since we only need it to take pictures of a face.
-- Configure Django server location in the code (more to come).
-- Run ./main.py and use your Django user credentials to register your lock and begin listening to
-the Flask server.
+- Configure Django server location in the main.py code (more to come).
+- Run ./main.py and use your Django server user credentials to register your lock and begin
+listening to the Flask server.
 - After this, if all went well, you should be able to control the lock manually from the website by
 hitting the unlock button.
 
 3) Training facial recognition
+- Instructions to come...
 
 
 ## Contributors:
