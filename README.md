@@ -59,6 +59,7 @@ export DEBUG=True
 
 Then, go ahead and create a user account for yourself on the site.  More instructions to come for:
 (Just a high level overview is here for now)
+
 1) Setting up the Flask server
 - Clone the flask-socketio-server repository
 - Create a virtual environment, install requirements.txt
