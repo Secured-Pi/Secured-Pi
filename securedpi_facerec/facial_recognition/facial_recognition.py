@@ -78,7 +78,7 @@ def train_recognizer(recognizer=cv2.face.createLBPHFaceRecognizer,
     recognizer.save(save_file)
 
 
-def test_individual(image_to_test, threshold=40,
+def test_individual(image_to_test,
                     recog_model=RECOG_MODEL, verbose=False):
     """Test if an individual has access to the lock.
 
