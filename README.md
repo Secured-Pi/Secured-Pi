@@ -1,5 +1,4 @@
 # Secured-Pi
-Code 401 (Python)
 
 This was a final project (week-long) for the Code Fellows Python 401 Advanced Software Development
 course taught by Cris Ewing.  There are still many un-implemented features which may continue
@@ -51,7 +50,7 @@ Then, create a superuser:
 ./manage.py createsuperuser
 ```
 
-Then, set our DEBUG env variable to False, and migrate and runserver.
+Then, set a DEBUG environment variable to False, and then migrate and runserver.
 ```
 export DEBUG=True
 ./manage.py migrate
