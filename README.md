@@ -12,7 +12,7 @@ The project consists of three components:  the Raspberry Pi, the django server, 
 The Django server is where a user can register an account along with their Raspberry Pi controlled
 lock.
 
-Here is a link to the porject on hackster.io:  https://www.hackster.io/secured-pi/facial-recognition-rfid-lock-with-raspberry-pi-e81f98
+Here is a link to the project on hackster.io:  https://www.hackster.io/secured-pi/facial-recognition-rfid-lock-with-raspberry-pi-e81f98
 
 - From the Django site, a user can control the lock with the press of a button, take pictures, train
 the facial recognition software, and monitor who has attempted to enter.
