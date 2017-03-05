@@ -52,30 +52,46 @@ Then, create a superuser:
 ./manage.py createsuperuser
 ```
 
-Then, set a DEBUG environment variable to False, and then migrate and runserver.
+Then, in the settings.py file, change the FLASK_SERVER to the appropriate ip address, and then migrate and runserver.
+When doing this locally, I run the Flask and Django servers on the same machine, and just set the ip
+to be the network's IP address for the machine running them.
 ```
-export DEBUG=True
 ./manage.py migrate
-./manage.py runserver
+./manage.py runserver 192.168.1.109:8000
 ```
 
-Then, go ahead and create a user account for yourself on the site.  More instructions to come:
+Then, go ahead and create a user account for yourself on the site, as well as and admin account.
+```
+./manage.py createsuperuser
+```
+More instructions to come:
 
 (Just a high level overview is here for now)
 
 1) Setting up the Flask server
 - Clone the flask-socketio-server repository
-- Create a virtual environment, install by: pip install -r requirements.txt
-- Run the server with ./src/server.py
+- Create a virtual environment, install requirements by:
+```
+pip install -r requirements.txt
+```
+- Run the server with:
+```
+./src/server.py
+```
 
 2) Setting up Raspberry Pi
 - Setup Raspberry Pi by connecting RFID, webcam, and updating the software.  Consider a breadboard.
 - Clone the raspberry-pi-client repository on to the device.
 - Create a virtual environment, activate it, install requirements.txt, and OpenCV.  OpenCV2 is
 sufficient, since we only need it to take pictures of a face.
-- Configure Django server location in the main.py code (more to come).
+- Configure Server location in the main.py code, as well as user_authentication.py (more to come).
 - Run ./main.py and use your Django server user credentials to register your lock and begin
 listening to the Flask server.
+- Go back to your Django server and log in as admin, then find your lock and set it to active.
+- You can also enter you RFID information if you know it.
+- If you don't, you can run the user_authentication script on the PI and look at the output to find
+the numbers.
+- Log back into your normal account associated with the lock on the Django server.
 - After this, if all went well, you should be able to control the lock manually from the website by
 hitting the unlock button.
 
