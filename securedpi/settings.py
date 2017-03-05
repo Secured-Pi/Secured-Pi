@@ -158,8 +158,10 @@ STATIC_ROOT = BASE_DIR
 # export EMAIL_HOST_PASSWORD='yourgmailpassword'
 #################
 
+ALLOWED_HOSTS = ['*']
 
 ACCOUNT_ACTIVATION_DAYS = 7
+DEBUG = True
 
 if not DEBUG:
     ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS")
@@ -177,7 +179,7 @@ else:
     ALLOWED_HOSTS = ['*']
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
     SECRET_KEY = 'poodles'
-    FLASK_SERVER = 'http://127.0.0.1'
+    FLASK_SERVER = 'http://192.168.1.109'
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
