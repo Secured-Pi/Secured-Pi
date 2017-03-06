@@ -40,21 +40,30 @@ def start_FR(sender, **kwargs):
     """
     event = kwargs['instance']
     lock = Lock.objects.get(pk=event.lock_id)
+    user_owns_lock = False
+    confidence_acceptable = None
 
     if event.photo and lock.status == 'locked':
         dj_decision = facial_recognition.test_individual(
             event.photo.url,
             verbose=True)
-        username = User.objects.get(pk=dj_decision[0]).username
-        print('**face recognized: ', dj_decision[0], ' as member ', username)
-        user_owns_lock = dj_decision[0] == lock.user.pk
-        confidence_acceptable = dj_decision[1] < UNCERTAINTY_THRESHOLD
+        try:
+            username = User.objects.get(pk=dj_decision[0]).username
+        except:
+            print('No facial recognition made. Check if yml file exists!')
+            dj_decision = (None, None)
+        if dj_decision[0]:
+            print('**face recognized: ', dj_decision[0], ' as member ', username)
+            user_owns_lock = dj_decision[0] == lock.user.pk
+            confidence_acceptable = dj_decision[1] < UNCERTAINTY_THRESHOLD
+
         matching_rfid = event.RFID == lock.RFID
         print('User has access to lock: ', user_owns_lock)
         print('Confidence acceptable: ', confidence_acceptable, dj_decision[1])
         print('RFID matches: ', matching_rfid)
 
-        if user_owns_lock and confidence_acceptable and matching_rfid:
+        if (user_owns_lock and confidence_acceptable and matching_rfid) or \
+           (matching_rfid and not lock.facial_recognition):
             serial = lock.serial
             data = {
                 'event_id': event.pk,
@@ -68,4 +77,5 @@ def start_FR(sender, **kwargs):
             requests.post(FLASK_SERVER + ':5000', json=data)
             print('Request sent to Flask server.')
             return
+
         print('Access Denied.')

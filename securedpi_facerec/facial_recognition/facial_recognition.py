@@ -86,7 +86,11 @@ def test_individual(image_to_test, recog_model=RECOG_MODEL, verbose=False):
     """
     recognizer = cv2.face.createLBPHFaceRecognizer
     recognizer = recognizer()
-    recognizer.load(recog_model)
+    try:
+        recognizer.load(recog_model)
+    except:
+        print('No training yml file found!')
+        return (None, None)
 
     # image_array = np.array(Image.open(image_to_test).convert('L'), 'uint8')
     image_array = np.array(Image.open(os.path.join(
