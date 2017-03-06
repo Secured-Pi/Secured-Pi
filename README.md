@@ -69,15 +69,15 @@ More instructions to come:
 
 (Just a high level overview is here for now)
 
-1) Setting up the Flask server
+1) Setting up the Flask server (Needs to be run with python2)
 - Clone the flask-socketio-server repository
 - Create a virtual environment, install requirements by:
 ```
-pip install -r requirements.txt
+pip2 install -r requirements.txt
 ```
 - Run the server with:
 ```
-./src/server.py
+python2 src/server.py
 ```
 
 2) Setting up Raspberry Pi
