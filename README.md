@@ -33,6 +33,9 @@ responsible for actually recognizing the face and issuing commands to unlock the
 After cloning this repo and cd into the project directory:
 
 - Install postgres (if needed) and create a database named 'securedpi'
+```
+postgres=# CREATE DATABASE securedpi;
+```
 
 Then, create a virtual environment and install requirements:
 ```
