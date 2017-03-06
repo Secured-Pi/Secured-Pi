@@ -49,16 +49,18 @@ def start_FR(sender, **kwargs):
             verbose=True)
         try:
             username = User.objects.get(pk=dj_decision[0]).username
+            user_owns_lock = dj_decision[0] == lock.user.pk
+            print('User has access to lock: ', user_owns_lock)
         except:
             print('No facial recognition made. Check if yml file exists!')
             dj_decision = ('', None)
         if dj_decision[0]:
             print('**face recognized: ', dj_decision[0], ' as member ', username)
             confidence_acceptable = dj_decision[1] < UNCERTAINTY_THRESHOLD
+        elif not lock.facial_recognition:
+            print('Lock does not have facial recognition enabled')
 
-        user_owns_lock = dj_decision[0] == lock.user.pk
         matching_rfid = event.RFID == lock.RFID
-        print('User has access to lock: ', user_owns_lock)
         print('Confidence acceptable: ', confidence_acceptable, dj_decision[1])
         print('RFID matches: ', matching_rfid)
 
