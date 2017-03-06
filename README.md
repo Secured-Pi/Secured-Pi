@@ -91,7 +91,7 @@ listening to the Flask server.
 - If you don't, you can run the user_authentication script on the PI and look at the output to find
 the numbers.  (This will be changed in the future so that this part will be unnecessary)
 - Log back into your normal account associated with the lock on the Django server.
-- You should be able to see you lock if all went well.  Click on 'Edit Details' and set you lock
+- You should be able to see your lock if all went well.  Click on 'Edit Details' and set you lock
 to active.
 - After this, if all went well, you should be able to control the lock manually from the website by
 hitting the unlock button.
