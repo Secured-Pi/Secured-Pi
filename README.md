@@ -64,6 +64,7 @@ Then, go ahead and create a user account for yourself on the site, as well as an
 ```
 ./manage.py createsuperuser
 ```
+
 More instructions to come:
 
 (Just a high level overview is here for now)
@@ -87,13 +88,15 @@ sufficient, since we only need it to take pictures of a face.
 - Configure Server location in the main.py code, as well as user_authentication.py (more to come).
 - Run ./main.py and use your Django server user credentials to register your lock and begin
 listening to the Flask server.
-- Go back to your Django server and log in as admin, then find your lock and set it to active.
-- You can also enter you RFID information if you know it.
 - If you don't, you can run the user_authentication script on the PI and look at the output to find
-the numbers.
+the numbers.  (This will be changed in the future so that this part will be unnecessary)
 - Log back into your normal account associated with the lock on the Django server.
+- You should be able to see you lock if all went well.  Click on 'Edit Details' and set you lock
+to active.
 - After this, if all went well, you should be able to control the lock manually from the website by
 hitting the unlock button.
+- Go back to your Django server and log in as admin, then you can enter you RFID information if you
+know it on the lock model.
 
 3) Training facial recognition
 - Instructions to come...
