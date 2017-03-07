@@ -83,7 +83,7 @@ pip2 install -r requirements.txt
 python2 src/server.py
 ```
 
-2) Setting up Raspberry Pi
+2) Setting up Raspberry Pi (see repo for more detailed instructions)
 - Setup Raspberry Pi by connecting RFID, webcam, and updating the software.  Consider a breadboard.
 - Clone the raspberry-pi-client repository on to the device.
 - Create a virtual environment, activate it, install requirements.txt, and OpenCV.  OpenCV2 is
