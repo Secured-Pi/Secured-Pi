@@ -5,6 +5,7 @@ from securedpi_events.models import Event
 
 class EventSerializer(serializers.ModelSerializer):
     """Define class to serialize events."""
+
     class Meta:
         model = Event
         fields = ('pk', 'lock_id', 'photo', 'mtype', 'status',
@@ -13,6 +14,7 @@ class EventSerializer(serializers.ModelSerializer):
 
 class LockSerializer(serializers.ModelSerializer):
     """Define class to serialize locks."""
+
     user = serializers.ReadOnlyField(source='user.username')
 
     class Meta:

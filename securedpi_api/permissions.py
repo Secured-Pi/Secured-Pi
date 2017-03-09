@@ -6,9 +6,11 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
     Custom permission to only allow owners of an object to edit it.
     """
 
+    # This is currently overriden in the settings.py with a default
     def has_object_permission(self, request, view, obj):
         """
         Allow GET, HEAD and OPTIONS requests for an unauth user.
+
         Write permissions are allowed to the owner of the object.
         """
         if request.method in permissions.SAFE_METHODS:
