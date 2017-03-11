@@ -6,7 +6,8 @@ to be worked on in the future, as this project is still in the somewhat 'early' 
 
 ## Description
 Python web application for a smart lock powered by Raspberry Pi.  It features facial recognition for
-security.  This code is for the main Django server.
+security (proof-of-concept, I would not recommend this for practical application--yet!).
+This code is for the main Django server.
 
 The project consists of three components:  the Raspberry Pi, the django server, and the flask server.
 The Django server is where a user can register an account along with their Raspberry Pi controlled
@@ -57,7 +58,8 @@ Then, create a superuser:
 
 Then, in the settings.py file, change the FLASK_SERVER to the appropriate ip address, and then migrate and runserver.
 When doing this locally, I run the Flask and Django servers on the same machine, and just set the ip
-to be the network's IP address for the machine running them.
+to be the network's IP address for the machine running them.  If you do not know it, you can run
+ifconfig to find it.
 ```
 ./manage.py migrate
 ./manage.py runserver 192.168.1.109:8000
