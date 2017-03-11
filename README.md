@@ -63,14 +63,9 @@ to be the network's IP address for the machine running them.
 ./manage.py runserver 192.168.1.109:8000
 ```
 
-Then, go ahead and create a user account for yourself on the site, as well as and admin account.
-```
-./manage.py createsuperuser
-```
+Then, go ahead and create a user account for yourself on the site.  Next,
+we need to set up Flask server and the Rpi:
 
-More instructions to come:
-
-(Just a high level overview is here for now)
 
 1) Setting up the Flask server (Needs to be run with python2)
 - Clone the flask-socketio-server repository
