@@ -1,0 +1,93 @@
+{% extends "securedpi/dashboard_base.html" %}
+{% load static %}
+{% block body %}
+<div class="row wrapper border-bottom white-bg page-heading">
+  <div class="col-sm-4">
+    <h2>Face Training</h2>
+    <ol class="breadcrumb">
+      <li>
+        <a href="/">Home</a>
+      </li>
+      <li class="active">
+        <strong>Face Training</strong>
+      </li>
+    </ol>
+  </div>
+</div>
+
+<div class="wrapper wrapper-content">
+
+  <div class="row">
+    <div class="col-lg-8">
+      <div class="ibox float-e-margins">
+        <div id="camera" class="ibox-content">
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="ibox float-e-margins">
+        <div class="ibox-content">
+          <button class="btn btn-primary" id="start-capture">Capture</button>
+          <button class="btn btn-success" id="start-training">Start Training</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div id=captured class="row">
+    <div class="col-lg-12">
+      <div class="ibox float-e-margins">
+        <div class="ibox-content">
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+{% endblock %}
+
+{% block js %}
+<script src="{% static "vendors/plugins/webcamjs/webcam.min.js" %}"></script>
+<script type="text/javascript">
+
+$(document).ready(function() {
+  Webcam.set({
+    height: 600,
+    image_format: 'png',
+    dest_width: 640,
+    dest_height: 480
+  });
+
+  Webcam.attach('#camera');
+
+  $('#start-capture').click(function() {
+    for (var i = 0; i <= 15; i++) {
+      Webcam.snap(function(image) {
+        $('<div class="col-sm-2"><img src="' + image + '"class="img-responsive"></div>').appendTo('#captured');
+        Webcam.upload( image, '/facerec/train/', function(code, text) {
+          console.log(text);
+        });
+      });
+    }
+  });
+
+  $('#start-training').click(function() {
+    $.ajax({
+        type: "POST",
+        url: "/facerec/train/",
+        data: JSON.stringify({ action: 'train'}),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function(data){alert(data);},
+        failure: function(errMsg) {
+            alert(errMsg);
+        }
+    });
+  })
+});
+</script>
+</section>
+{% endblock %}

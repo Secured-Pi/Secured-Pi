@@ -1,0 +1,60 @@
+{% extends "securedpi/dashboard_base.html" %}
+{% block body %}
+<section class="container-fluid">
+
+  <div class="row">
+    <div class="col-sm-12">
+      <h2><strong>Training View</strong></h2>
+      <button class="btn btn-primary" id="start-capture">Capture</button>
+      <button class="btn btn-success" id="start-training">Start Training</button>
+      <div class="col-sm-8" id="camera"></div>
+    </div>
+    <div class="col-sm-12" id="captured">
+
+    </div>
+  </div>
+
+  {% endblock %}
+
+  {% block js %}
+  <script type="text/javascript" src="{{ STATIC_ROOT }}/static/js/vendors/webcam.min.js"></script>
+  <script type="text/javascript">
+
+  $(document).ready(function() {
+    Webcam.set({
+      height: 600,
+      image_format: 'png',
+      dest_width: 640,
+      dest_height: 480
+    });
+
+    Webcam.attach('#camera');
+
+    $('#start-capture').click(function() {
+      for (var i = 0; i <= 15; i++) {
+        Webcam.snap(function(image) {
+          $('<div class="col-sm-2"><img src="' + image + '"class="img-responsive"></div>').appendTo('#captured');
+          Webcam.upload( image, '/facerec/train/', function(code, text) {
+            console.log(text);
+          });
+        });
+      }
+    });
+
+    $('#start-training').click(function() {
+      $.ajax({
+          type: "POST",
+          url: "/facerec/train/",
+          data: JSON.stringify({ action: 'train'}),
+          contentType: "application/json; charset=utf-8",
+          dataType: "json",
+          success: function(data){alert(data);},
+          failure: function(errMsg) {
+              alert(errMsg);
+          }
+      });
+    })
+  });
+  </script>
+</section>
+{% endblock %}
